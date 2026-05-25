@@ -2,7 +2,7 @@
 
 > **Jaikuaa** (guaraní: *conozcamos / sabemos*) — una PWA de cultura paraguaya, una tarjeta a la vez.
 
-3.019 entries curados sobre lugares, naturaleza, idioma guaraní, cultura, comida, personajes, historia, leyendas y vida cotidiana. No es Wikipedia: es un descubridor poético.
+2.927 entries curados sobre lugares, naturaleza, idioma guaraní, cultura, comida, personajes, historia, leyendas y vida cotidiana. No es Wikipedia: es un descubridor poético.
 
 ## Stack
 
