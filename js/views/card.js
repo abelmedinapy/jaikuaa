@@ -1,5 +1,5 @@
 // CardView: el corazón de Jaikuaa.
-import { byId, CATEGORY_COLOR, CATEGORY_LABEL, filterItems, randomItem, tierAItems } from '../data.js';
+import { byId, CATEGORY_COLOR, CATEGORY_LABEL, filterItems, getRelated, randomItem, tierAItems } from '../data.js';
 import { getState, isFav, pushHistory, toggleFav, historyPrev, historyNext } from '../store.js';
 import { ICONS } from '../utils/icons.js';
 import { showToast } from '../app.js';
@@ -8,6 +8,20 @@ const view = () => document.getElementById('view');
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+function renderRelated(entry) {
+  const related = getRelated(entry, 3);
+  if (!related.length) return '';
+  const links = related.map((r) =>
+    `<a class="related-link" data-action="open-card" data-id="${r.id}">${escapeHtml(r.title)}</a>`
+  ).join('<span class="related-sep">·</span>');
+  return `
+    <div class="card-related">
+      <span class="related-label">relacionadas</span>
+      <div class="related-links">${links}</div>
+    </div>
+  `;
 }
 
 function renderCardHTML(entry) {
@@ -29,6 +43,8 @@ function renderCardHTML(entry) {
         ${bodyHtml}
       </div>
 
+      ${renderRelated(entry)}
+
       <footer class="card-footer">
         <div class="card-meta">
           <span class="card-cat-dot" aria-hidden="true"></span>
@@ -40,12 +56,14 @@ function renderCardHTML(entry) {
         <div class="card-source-row">
           <div class="card-source">${escapeHtml(entry.source || '')}</div>
           <div class="card-actions">
-            <button data-action="fav" class="${fav ? 'is-fav' : ''}" aria-label="${fav ? 'Quitar de favoritos' : 'Marcar como favorito'}" title="Favorito">${fav ? ICONS.starFill : ICONS.star}</button>
+            <button data-action="fav" class="${fav ? 'is-fav' : ''}" aria-label="${fav ? 'Quitar de favoritos' : 'Marcar como favorito'}" title="Favorito (doble tap)">${fav ? ICONS.starFill : ICONS.star}</button>
             <button data-action="share" aria-label="Compartir" title="Compartir">${ICONS.share}</button>
-            <button data-action="copy" aria-label="Copiar" title="Copiar contenido">${ICONS.copy}</button>
+            <button data-action="copy" aria-label="Copiar texto" title="Copiar texto">${ICONS.copy}</button>
           </div>
         </div>
       </footer>
+
+      <div class="fav-burst" aria-hidden="true">${ICONS.starFill}</div>
     </article>
   `;
 }
@@ -56,24 +74,35 @@ export function getCurrentEntry() { return currentEntry; }
 function pickPool() {
   const { filters } = getState();
   const pool = filterItems(filters);
-  return pool.length ? pool : filterItems({}); // fallback if filters empty
+  return pool.length ? pool : filterItems({});
+}
+
+function mountStage(html) {
+  const root = view();
+  root.innerHTML = `
+    <div class="card-stage">
+      ${html}
+      <button class="discover-btn" data-action="discover-next" aria-label="Otra tarjeta">
+        <span>Otra</span> ${ICONS.dice}
+      </button>
+    </div>
+  `;
 }
 
 export function showCard(entry, { recordHistory = true } = {}) {
   if (!entry) return;
   currentEntry = entry;
   const root = view();
-  // Animate out the previous card if present
   const prev = root.querySelector('.card');
-  const mount = () => {
-    root.innerHTML = `<div class="card-stage">${renderCardHTML(entry)}</div>`;
+  const doMount = () => {
+    mountStage(renderCardHTML(entry));
     if (recordHistory) pushHistory(entry.id);
   };
   if (prev) {
     prev.classList.add('leaving');
-    setTimeout(mount, 130);
+    setTimeout(doMount, 130);
   } else {
-    mount();
+    doMount();
   }
 }
 
@@ -82,21 +111,18 @@ export function renderRoute({ arg } = {}) {
     const it = byId(arg);
     if (it) { showCard(it); return; }
   }
-  // Initial: first impression must be Tier A
   const state = getState();
   if (!state.history.length && !state.filters.categories.length && !state.filters.tierAOnly) {
     const first = randomItem(tierAItems());
     showCard(first);
     return;
   }
-  // Subsequent random within current filters
   nextRandom();
 }
 
 export function nextRandom() {
   const pool = pickPool();
   let pick = randomItem(pool);
-  // avoid repeating same one back-to-back when possible
   if (pick && currentEntry && pool.length > 1 && pick.id === currentEntry.id) {
     pick = randomItem(pool);
   }
@@ -105,24 +131,34 @@ export function nextRandom() {
 
 export function navHistory(direction) {
   const id = direction < 0 ? historyPrev() : historyNext();
-  if (!id) {
-    if (direction > 0) nextRandom();
-    return;
-  }
+  if (!id) { if (direction > 0) nextRandom(); return; }
   const it = byId(id);
   if (it) {
     currentEntry = it;
     const root = view();
     const prev = root.querySelector('.card');
-    const mount = () => { root.innerHTML = `<div class="card-stage">${renderCardHTML(it)}</div>`; };
-    if (prev) { prev.classList.add('leaving'); setTimeout(mount, 130); } else { mount(); }
+    const doMount = () => mountStage(renderCardHTML(it));
+    if (prev) { prev.classList.add('leaving'); setTimeout(doMount, 130); } else { doMount(); }
   }
+}
+
+// Fav animation pulse (double-tap or button)
+export function pulseFavOnCard() {
+  const burst = document.querySelector('.card .fav-burst');
+  if (!burst) return;
+  burst.classList.remove('show');
+  // force reflow to restart animation
+  void burst.offsetWidth;
+  burst.classList.add('show');
+  if (navigator.vibrate) navigator.vibrate(10);
 }
 
 // Wire interactions specific to card surface
 export function setupCardInteractions(root) {
   let touchStartX = null, touchStartY = null, touchStartT = 0;
   let longPressTimer = null;
+  let lastTapT = 0;
+  let suppressNextClick = false;
 
   root.addEventListener('touchstart', (e) => {
     if (!e.target.closest('.card-stage')) return;
@@ -149,16 +185,71 @@ export function setupCardInteractions(root) {
     const dy = t.clientY - touchStartY;
     const dt = Date.now() - touchStartT;
     touchStartX = touchStartY = null;
+
+    // Swipe
     if (dt < 600 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      suppressNextClick = true;
+      setTimeout(() => suppressNextClick = false, 350);
       if (dx < 0) navHistory(1); else navHistory(-1);
+      return;
+    }
+
+    // Double tap (only over the article.card body, not over action buttons)
+    const tappedCard = e.target.closest('.card') && !e.target.closest('[data-action]:not([data-action="next-card"])');
+    if (tappedCard) {
+      const now = Date.now();
+      if (now - lastTapT < 320) {
+        e.preventDefault();
+        suppressNextClick = true;
+        setTimeout(() => suppressNextClick = false, 350);
+        if (currentEntry) {
+          toggleFav(currentEntry.id);
+          // Update the fav button state on the card
+          const favBtn = document.querySelector('.card-actions [data-action="fav"]');
+          if (favBtn) {
+            const now = isFav(currentEntry.id);
+            favBtn.classList.toggle('is-fav', now);
+            favBtn.innerHTML = now ? ICONS.starFill : ICONS.star;
+          }
+          pulseFavOnCard();
+          showToast(isFav(currentEntry.id) ? 'Agregado a favoritos' : 'Quitado de favoritos');
+        }
+        lastTapT = 0;
+      } else {
+        lastTapT = now;
+      }
     }
   });
 
+  // Suppress synthetic click after suppression event
+  root.addEventListener('click', (e) => {
+    if (suppressNextClick && e.target.closest('.card')) {
+      e.stopPropagation();
+      e.preventDefault();
+      suppressNextClick = false;
+    }
+  }, true);
+
   // Right-click → copy
   root.addEventListener('contextmenu', (e) => {
-    if (e.target.closest('.card')) {
-      e.preventDefault();
-      copyCurrent();
+    if (e.target.closest('.card')) { e.preventDefault(); copyCurrent(); }
+  });
+
+  // Desktop double-click → fav
+  root.addEventListener('dblclick', (e) => {
+    if (e.target.closest('[data-action]:not([data-action="next-card"])')) return;
+    if (!e.target.closest('.card')) return;
+    e.preventDefault();
+    if (currentEntry) {
+      toggleFav(currentEntry.id);
+      const favBtn = document.querySelector('.card-actions [data-action="fav"]');
+      if (favBtn) {
+        const now = isFav(currentEntry.id);
+        favBtn.classList.toggle('is-fav', now);
+        favBtn.innerHTML = now ? ICONS.starFill : ICONS.star;
+      }
+      pulseFavOnCard();
+      showToast(isFav(currentEntry.id) ? 'Agregado a favoritos' : 'Quitado de favoritos');
     }
   });
 }

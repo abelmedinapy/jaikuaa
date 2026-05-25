@@ -129,6 +129,26 @@ export function randomItem(pool) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+// Related items: same subcategory first, then same category, excluding the entry itself.
+export function getRelated(entry, n = 3) {
+  if (!entry || !_data) return [];
+  const sameSub = _byCategory.get(entry.category)?.filter(
+    (i) => i.subcategory === entry.subcategory && i.id !== entry.id
+  ) || [];
+  const pool = sameSub.length >= n ? sameSub :
+    (_byCategory.get(entry.category) || []).filter((i) => i.id !== entry.id);
+  // Random sample without repetition
+  const out = [];
+  const used = new Set();
+  while (out.length < n && used.size < pool.length) {
+    const idx = Math.floor(Math.random() * pool.length);
+    if (used.has(idx)) continue;
+    used.add(idx);
+    out.push(pool[idx]);
+  }
+  return out;
+}
+
 // Deterministic pick for "Tarjeta del día" based on YYYY-MM-DD hash.
 export function dailyItem(pool = allItems()) {
   if (!pool.length) return null;

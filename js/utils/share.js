@@ -159,28 +159,34 @@ export async function renderCardToCanvas(entry, canvas = document.createElement(
 }
 
 export async function shareCard(entry) {
+  const cardUrl = `${location.origin}${location.pathname}#/card/${entry.id}`;
   const canvas = await renderCardToCanvas(entry);
   const blob = await new Promise((res) => canvas.toBlob(res, 'image/png', 0.95));
   const safeTitle = (entry.title || 'jaikuaa').replace(/[^\w\-]+/g, '_').slice(0, 40);
   const fileName = `jaikuaa-${safeTitle}.png`;
   const file = new File([blob], fileName, { type: 'image/png' });
+  const text = `${entry.title}${entry.subtitle ? ' — ' + entry.subtitle : ''} · Jaikuaa`;
+
+  // Mobile: native share with file + URL (apps like WA, Telegram show both)
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
-      await navigator.share({
-        files: [file],
-        title: entry.title,
-        text: `${entry.title}${entry.subtitle ? ' — ' + entry.subtitle : ''} · Jaikuaa`,
-      });
+      await navigator.share({ files: [file], url: cardUrl, title: entry.title, text });
       return 'shared';
     } catch (e) {
       if (e.name === 'AbortError') return 'aborted';
     }
   }
-  // Fallback: download
+
+  // Desktop fallback: copy link AND download PNG
+  let linkCopied = false;
+  try {
+    await navigator.clipboard.writeText(cardUrl);
+    linkCopied = true;
+  } catch {}
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = fileName;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  return 'downloaded';
+  return linkCopied ? 'link-and-png' : 'downloaded';
 }

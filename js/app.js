@@ -3,6 +3,7 @@ import { loadData } from './data.js';
 import { defineRoute, navigate, startRouter, currentRoute } from './router.js';
 import { getState, incVisits, setState, subscribe, toggleFav } from './store.js';
 import { inflateIcons } from './utils/icons.js';
+import { storage } from './utils/storage.js';
 
 // Views
 import { copyCurrent, getCurrentEntry, nextRandom, navHistory, renderRoute as renderCard, setupCardInteractions } from './views/card.js';
@@ -40,10 +41,37 @@ async function boot() {
     document.getElementById('nav').hidden = false;
     defineRoutes();
     startRouter();
+    maybeShowSwipeHint();
   } catch (err) {
     console.error(err);
     showFatal(err.message || 'Error al cargar el dataset.');
   }
+}
+
+// One-time onboarding hint
+function maybeShowSwipeHint() {
+  const seen = storage.get('hint_seen', false);
+  if (seen) return;
+  const cur = currentRoute();
+  if (cur.name !== '' && cur.name !== 'card') return;
+  const el = document.getElementById('swipe-hint');
+  if (!el) return;
+  setTimeout(() => {
+    el.hidden = false;
+    requestAnimationFrame(() => el.classList.add('show'));
+    const dismiss = () => {
+      el.classList.remove('show');
+      setTimeout(() => { el.hidden = true; }, 300);
+      storage.set('hint_seen', true);
+      document.removeEventListener('touchstart', dismiss);
+      document.removeEventListener('mousedown', dismiss);
+      document.removeEventListener('keydown', dismiss);
+    };
+    setTimeout(dismiss, 3500);
+    document.addEventListener('touchstart', dismiss, { once: true, passive: true });
+    document.addEventListener('mousedown', dismiss, { once: true });
+    document.addEventListener('keydown', dismiss, { once: true });
+  }, 800);
 }
 
 function hideSplash() {
@@ -112,6 +140,11 @@ function bindGlobalListeners() {
       return;
     }
 
+    if (action === 'discover-next') {
+      nextRandom();
+      return;
+    }
+
     if (action === 'filter-by-cat') {
       // Single-category quick filter
       const cat = target.dataset.cat;
@@ -143,6 +176,7 @@ function bindGlobalListeners() {
       try {
         const res = await shareCard(entry);
         if (res === 'shared') showToast('Compartido');
+        else if (res === 'link-and-png') showToast('Enlace copiado · PNG descargado');
         else if (res === 'downloaded') showToast('PNG descargado');
       } catch (err) {
         showToast('No se pudo compartir');

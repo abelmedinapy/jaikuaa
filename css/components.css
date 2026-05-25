@@ -61,6 +61,44 @@
   box-shadow: 0 0 0 2px var(--bg-base), 0 0 8px var(--accent-red);
 }
 
+/* Swipe / tap hint (first visit) */
+.swipe-hint {
+  position: fixed; inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--sp-5);
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--easing);
+}
+.swipe-hint[hidden] { display: none; }
+.swipe-hint.show { opacity: 1; }
+.swipe-arrow {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  color: var(--fg-secondary);
+  opacity: 0.6;
+  animation: swipePulse 1.6s ease-in-out infinite;
+}
+.swipe-arrow.right { animation-delay: 0.8s; }
+@keyframes swipePulse {
+  0%, 100% { transform: translateX(0); opacity: 0.3; }
+  50%      { transform: translateX(8px); opacity: 0.8; }
+}
+.swipe-arrow.left { animation-name: swipePulseLeft; }
+@keyframes swipePulseLeft {
+  0%, 100% { transform: translateX(0); opacity: 0.3; }
+  50%      { transform: translateX(-8px); opacity: 0.8; }
+}
+.swipe-hint-text {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--nav-h) + var(--safe-bottom) + 90px);
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--fg-tertiary); text-align: center;
+  line-height: 1.5; white-space: nowrap;
+}
+
 /* Toast */
 .toast {
   position: fixed; left: 50%; transform: translate(-50%, 24px);
