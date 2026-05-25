@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0A0F">
+  <meta name="description" content="Cultura paraguaya, una tarjeta a la vez. 3019 entries curados: lugares, naturaleza, idioma guaraní, cultura, comida, personajes, historia, leyendas y sociedad.">
+  <title>Jaikuaa — cultura paraguaya, una tarjeta a la vez</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+</head>
+<body>
+  <div id="splash" class="splash" aria-hidden="false">
+    <span class="splash-word">Jaikuaa</span>
+  </div>
+
+  <main id="view" class="view" aria-live="polite"></main>
+
+  <nav id="nav" class="bottom-nav" aria-label="Navegación principal" hidden>
+    <button class="nav-btn" data-action="route" data-route="favorites" aria-label="Favoritos">
+      <span class="nav-ico" data-ico="star"></span>
+    </button>
+    <button class="nav-btn" data-action="route" data-route="" aria-label="Random">
+      <span class="nav-ico" data-ico="dice"></span>
+    </button>
+    <button class="nav-btn" data-action="route" data-route="map" aria-label="Mapa">
+      <span class="nav-ico" data-ico="map"></span>
+    </button>
+    <button class="nav-btn" data-action="route" data-route="search" aria-label="Buscar">
+      <span class="nav-ico" data-ico="search"></span>
+    </button>
+    <button class="nav-btn" data-action="route" data-route="settings" aria-label="Ajustes">
+      <span class="nav-ico" data-ico="gear"></span>
+    </button>
+    <span class="nav-offline-dot" id="offline-dot" hidden aria-label="Sin conexión"></span>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="sheet" class="sheet" hidden></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

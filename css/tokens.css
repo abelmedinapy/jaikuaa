@@ -1,0 +1,79 @@
+:root {
+  /* Fondos */
+  --bg-base: #0A0A0F;
+  --bg-card: #14141C;
+  --bg-elevated: #1C1C26;
+  --bg-input: #20202A;
+
+  /* Texto */
+  --fg-primary: #F5F1E8;
+  --fg-secondary: #9C968B;
+  --fg-tertiary: #5C5850;
+
+  /* Bordes */
+  --border-subtle: #2A2A35;
+  --border-strong: #3D3D4A;
+
+  /* Acentos */
+  --accent-red: #D52B1E;
+  --accent-pink: #FF6B9D;
+  --accent-yellow: #FFC72C;
+  --accent-green: #1E8F4E;
+  --accent-violet: #8E7BC9;
+
+  /* Categorías */
+  --cat-lugares: #1E8F4E;
+  --cat-naturaleza: #5A8C3F;
+  --cat-idioma: #FF6B9D;
+  --cat-sociedad: #A8A29A;
+  --cat-curiosos: #FFC72C;
+  --cat-cultura: #8E7BC9;
+  --cat-personajes: #D52B1E;
+  --cat-comida: #E07856;
+  --cat-historia: #B8956A;
+  --cat-etnografia: #8B6F47;
+  --cat-mitologia: #5D3A8E;
+
+  /* Sombras */
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.7);
+
+  /* Tipografía */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Spacing */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Timings */
+  --t-fast: 150ms;
+  --t-base: 200ms;
+  --t-slow: 400ms;
+  --easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Layout */
+  --nav-h: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 1ms;
+    --t-base: 1ms;
+    --t-slow: 1ms;
+  }
+}

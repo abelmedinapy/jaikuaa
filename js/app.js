@@ -1,0 +1,222 @@
+// Bootstrap, routing, global event delegation.
+import { loadData } from './data.js';
+import { defineRoute, navigate, startRouter, currentRoute } from './router.js';
+import { getState, incVisits, setState, subscribe, toggleFav } from './store.js';
+import { inflateIcons } from './utils/icons.js';
+
+// Views
+import { copyCurrent, getCurrentEntry, nextRandom, navHistory, renderRoute as renderCard, setupCardInteractions } from './views/card.js';
+import { renderRoute as renderSearch, handleSearchAction } from './views/search.js';
+import { renderRoute as renderFavorites } from './views/favorites.js';
+import { renderRoute as renderMap } from './views/map.js';
+import { openSettings, closeSettings, handleSettingsAction } from './views/settings.js';
+
+import { shareCard } from './utils/share.js';
+
+// ---- Toast ----
+let toastTimer = null;
+export function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ---- Boot ----
+async function boot() {
+  inflateIcons(document);
+  incVisits();
+  bindGlobalListeners();
+  bindServiceWorker();
+  bindInstallPrompt();
+  bindOnlineStatus();
+
+  try {
+    await loadData();
+    setState({ ready: true });
+    hideSplash();
+    document.getElementById('nav').hidden = false;
+    defineRoutes();
+    startRouter();
+  } catch (err) {
+    console.error(err);
+    showFatal(err.message || 'Error al cargar el dataset.');
+  }
+}
+
+function hideSplash() {
+  const s = document.getElementById('splash');
+  if (!s) return;
+  s.classList.add('fade-out');
+  setTimeout(() => { s.hidden = true; }, 400);
+}
+
+function showFatal(msg) {
+  const root = document.getElementById('view');
+  root.innerHTML = `
+    <div class="fullscreen-msg">
+      <h1>No pudimos cargar Jaikuaa</h1>
+      <p>${msg}</p>
+      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez se necesita conexión para descargar las 3019 tarjetas. Después funciona sin internet.</p>
+      <button class="btn" onclick="location.reload()">Reintentar</button>
+    </div>
+  `;
+  hideSplash();
+}
+
+// ---- Routes ----
+function defineRoutes() {
+  defineRoute('', (ctx) => { highlightNav(''); renderCard(ctx); });
+  defineRoute('card', (ctx) => { highlightNav(''); renderCard(ctx); });
+  defineRoute('search', () => { highlightNav('search'); renderSearch(); });
+  defineRoute('favorites', () => { highlightNav('favorites'); renderFavorites(); });
+  defineRoute('map', () => { highlightNav('map'); renderMap(); });
+  defineRoute('settings', () => { highlightNav('settings'); /* keep prior view visible */ openSettings(); });
+}
+
+function highlightNav(active) {
+  document.querySelectorAll('.nav-btn').forEach((b) => {
+    b.classList.toggle('is-active', (b.dataset.route || '') === active);
+  });
+}
+
+// ---- Global event delegation ----
+function bindGlobalListeners() {
+  const root = document.body;
+
+  root.addEventListener('click', async (e) => {
+    const target = e.target.closest('[data-action]');
+    if (!target) {
+      // Close sheet on backdrop
+      const sheetEl = document.getElementById('sheet');
+      if (sheetEl && !sheetEl.hidden && e.target === sheetEl) closeSettings();
+      return;
+    }
+    const action = target.dataset.action;
+
+    if (action === 'route') {
+      const route = target.dataset.route || '';
+      // If clicking same route as current AND it's home → force new random
+      const cur = currentRoute();
+      if (route === '' && cur.name === '') { nextRandom(); return; }
+      navigate(route);
+      return;
+    }
+
+    if (action === 'next-card') {
+      // Ignore taps on actions / metadata children that already handled themselves
+      if (e.target.closest('[data-action]') !== target) return;
+      nextRandom();
+      return;
+    }
+
+    if (action === 'filter-by-cat') {
+      // Single-category quick filter
+      const cat = target.dataset.cat;
+      const cur = getState().filters.categories;
+      const next = cur.length === 1 && cur[0] === cat ? [] : [cat];
+      setState({ filters: { ...getState().filters, categories: next } });
+      showToast(next.length ? `Filtro: ${cat}` : 'Sin filtro de categoría');
+      navigate('search');
+      return;
+    }
+
+    if (action === 'fav') {
+      const card = target.closest('.card');
+      if (!card) return;
+      const id = card.dataset.id;
+      const now = toggleFav(id);
+      target.classList.toggle('is-fav', now);
+      target.innerHTML = now
+        ? '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .7-4.5 4.2 1.2 6L12 16.8 6.7 19.4l1.2-6L3.4 9.2l6-.7L12 3z"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .7-4.5 4.2 1.2 6L12 16.8 6.7 19.4l1.2-6L3.4 9.2l6-.7L12 3z"/></svg>';
+      showToast(now ? 'Agregado a favoritos' : 'Quitado de favoritos');
+      return;
+    }
+
+    if (action === 'share') {
+      const entry = getCurrentEntry();
+      if (!entry) return;
+      showToast('Generando imagen…');
+      try {
+        const res = await shareCard(entry);
+        if (res === 'shared') showToast('Compartido');
+        else if (res === 'downloaded') showToast('PNG descargado');
+      } catch (err) {
+        showToast('No se pudo compartir');
+        console.error(err);
+      }
+      return;
+    }
+
+    if (action === 'copy') {
+      await copyCurrent();
+      return;
+    }
+
+    if (action === 'open-card') {
+      navigate('card', target.dataset.id);
+      return;
+    }
+
+    if (handleSearchAction(action, target)) return;
+    if (handleSettingsAction(action, target)) return;
+  });
+
+  // Keyboard nav
+  window.addEventListener('keydown', (e) => {
+    // Ignore when typing
+    if (['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
+    const cur = currentRoute();
+    if (cur.name !== '' && cur.name !== 'card') return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); navHistory(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); navHistory(-1); }
+    else if (e.code === 'Space') { e.preventDefault(); nextRandom(); }
+  });
+
+  // Card-stage touch + contextmenu
+  setupCardInteractions(document.body);
+
+  // Subscribe: when filters change, refresh nav highlight (no-op here mostly)
+  subscribe(() => { /* hook for future reactive UI */ });
+}
+
+// ---- Service worker ----
+function bindServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch((err) => {
+        console.warn('SW register failed', err);
+      });
+    });
+  }
+}
+
+// ---- Install prompt ----
+function bindInstallPrompt() {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    setState({ installPrompt: e });
+  });
+  window.addEventListener('appinstalled', () => {
+    setState({ installPrompt: null });
+    showToast('Jaikuaa instalada');
+  });
+}
+
+// ---- Online status ----
+function bindOnlineStatus() {
+  const dot = document.getElementById('offline-dot');
+  const update = () => {
+    const online = navigator.onLine;
+    setState({ online });
+    if (dot) dot.hidden = online;
+  };
+  window.addEventListener('online', update);
+  window.addEventListener('offline', update);
+  update();
+}
+
+boot();
