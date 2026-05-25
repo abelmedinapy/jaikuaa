@@ -1,9 +1,9 @@
 :root {
   /* Fondos */
-  --bg-base: #0A0A0F;
-  --bg-card: #14141C;
-  --bg-elevated: #1C1C26;
-  --bg-input: #20202A;
+  --bg-base: #08080D;
+  --bg-card: #15141C;
+  --bg-elevated: #1D1C26;
+  --bg-input: #211F2B;
 
   /* Texto */
   --fg-primary: #F5F1E8;

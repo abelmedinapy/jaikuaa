@@ -14,36 +14,38 @@ function renderCardHTML(entry) {
   const cat = entry.category;
   const color = CATEGORY_COLOR[cat] || 'var(--fg-tertiary)';
   const isGuarani = cat === 'idioma';
-  const initial = entry.title.trim()[0] || '·';
   const fav = isFav(entry.id);
-  const yearHtml = entry.year ? `<span class="year">${entry.year}</span>` : '';
+  const yearHtml = entry.year ? `<span class="card-title-year">${entry.year}</span>` : '';
   const subtitleHtml = entry.subtitle ? `<p class="card-subtitle">${escapeHtml(entry.subtitle)}</p>` : '';
   const bodyHtml = entry.body ? `<p class="card-body">${escapeHtml(entry.body)}</p>` : '';
-  const tier = entry.tier === 'A' ? `<span class="card-tier" title="Destacado">★ destacado</span>` : '';
+  const tierHtml = entry.tier === 'A' ? `<span class="card-tier-badge" title="Destacado" aria-label="Destacado">★</span>` : '';
+  const subLabel = entry.subcategory_label || entry.subcategory || '';
 
   return `
     <article class="card" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
-      <span class="card-placeholder-letter" aria-hidden="true">${escapeHtml(initial)}</span>
-
-      <div class="card-meta-top">
-        <span class="cat-link" data-action="filter-by-cat" data-cat="${cat}">${escapeHtml(CATEGORY_LABEL[cat] || cat)}</span>
-        <span class="sep">·</span>
-        <span>${escapeHtml(entry.subcategory_label || entry.subcategory || '')}</span>
-        ${tier}
+      <div class="card-hero">
+        <h1 class="card-title ${isGuarani ? 'is-guarani' : ''}">${escapeHtml(entry.title)}${yearHtml}</h1>
+        ${subtitleHtml}
+        ${bodyHtml}
       </div>
 
-      <h1 class="card-title ${isGuarani ? 'is-guarani' : ''}">${escapeHtml(entry.title)}${yearHtml}</h1>
-      ${subtitleHtml}
-      ${bodyHtml}
+      <footer class="card-footer">
+        <div class="card-meta">
+          <span class="card-cat-dot" aria-hidden="true"></span>
+          <span class="card-cat-link" data-action="filter-by-cat" data-cat="${cat}">${escapeHtml(CATEGORY_LABEL[cat] || cat)}</span>
+          ${subLabel ? `<span class="sep">·</span><span>${escapeHtml(subLabel)}</span>` : ''}
+          ${tierHtml}
+        </div>
 
-      <hr class="card-sep" aria-hidden="true">
-      <div class="card-source">${escapeHtml(entry.source || '')}</div>
-
-      <div class="card-actions">
-        <button data-action="fav" class="${fav ? 'is-fav' : ''}" aria-label="${fav ? 'Quitar de favoritos' : 'Marcar como favorito'}" title="Favorito">${fav ? ICONS.starFill : ICONS.star}</button>
-        <button data-action="share" aria-label="Compartir" title="Compartir">${ICONS.share}</button>
-        <button data-action="copy" aria-label="Copiar" title="Copiar contenido">${ICONS.copy}</button>
-      </div>
+        <div class="card-source-row">
+          <div class="card-source">${escapeHtml(entry.source || '')}</div>
+          <div class="card-actions">
+            <button data-action="fav" class="${fav ? 'is-fav' : ''}" aria-label="${fav ? 'Quitar de favoritos' : 'Marcar como favorito'}" title="Favorito">${fav ? ICONS.starFill : ICONS.star}</button>
+            <button data-action="share" aria-label="Compartir" title="Compartir">${ICONS.share}</button>
+            <button data-action="copy" aria-label="Copiar" title="Copiar contenido">${ICONS.copy}</button>
+          </div>
+        </div>
+      </footer>
     </article>
   `;
 }

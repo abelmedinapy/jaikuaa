@@ -10,7 +10,8 @@ function escapeHtml(s) {
 function renderRow(it) {
   const color = CATEGORY_COLOR[it.category];
   const snippet = it.body ? escapeHtml(it.body.slice(0, 120)) + (it.body.length > 120 ? '…' : '') : '';
-  const subtitle = it.subtitle ? `<span class="italic serif" style="color:var(--fg-secondary)"> · ${escapeHtml(it.subtitle)}</span>` : '';
+  const subtitle = it.subtitle ? ` <span class="row-title-sub">· ${escapeHtml(it.subtitle)}</span>` : '';
+  const tier = it.tier === 'A' ? `<span class="row-tier" title="Destacado">★</span>` : '';
   return `
     <div class="row" data-action="open-card" data-id="${it.id}">
       <div class="row-title">${escapeHtml(it.title)}${subtitle}</div>
@@ -19,6 +20,7 @@ function renderRow(it) {
         <span class="chip is-active" style="--cat-color:${color}">
           <span class="chip-dot" style="--cat-color:${color}"></span>${escapeHtml(CATEGORY_LABEL[it.category])}
         </span>
+        ${tier}
       </div>
     </div>
   `;
@@ -43,7 +45,7 @@ export function renderRoute() {
   }
   root.innerHTML = `
     <div class="fav-wrap">
-      <h2 class="fav-title">Favoritos <span class="mono" style="color:var(--fg-tertiary); font-size:0.9rem">${items.length}</span></h2>
+      <h2 class="fav-title">Favoritos <span class="count">${items.length}</span></h2>
       <div class="fav-list">${items.map(renderRow).join('')}</div>
     </div>
   `;

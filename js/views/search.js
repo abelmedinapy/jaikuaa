@@ -13,8 +13,8 @@ let debounceT = null;
 function renderRow(it) {
   const color = CATEGORY_COLOR[it.category];
   const snippet = it.body ? escapeHtml(it.body.slice(0, 140)) + (it.body.length > 140 ? '…' : '') : '';
-  const subtitle = it.subtitle ? `<span class="italic serif" style="color:var(--fg-secondary)"> · ${escapeHtml(it.subtitle)}</span>` : '';
-  const tier = it.tier === 'A' ? `<span class="mono" style="color:var(--accent-yellow); font-size:0.7rem">★</span>` : '';
+  const subtitle = it.subtitle ? ` <span class="row-title-sub">· ${escapeHtml(it.subtitle)}</span>` : '';
+  const tier = it.tier === 'A' ? `<span class="row-tier" title="Destacado">★</span>` : '';
   return `
     <div class="row" data-action="open-card" data-id="${it.id}">
       <div class="row-title">${escapeHtml(it.title)}${subtitle}</div>
