@@ -59,7 +59,7 @@ function showFatal(msg) {
     <div class="fullscreen-msg">
       <h1>No pudimos cargar Jaikuaa</h1>
       <p>${msg}</p>
-      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez se necesita conexión para descargar las 2927 tarjetas. Después funciona sin internet.</p>
+      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez se necesita conexión para descargar las 2940 tarjetas. Después funciona sin internet.</p>
       <button class="btn" onclick="location.reload()">Reintentar</button>
     </div>
   `;

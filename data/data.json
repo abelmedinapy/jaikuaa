@@ -1,27 +1,27 @@
 {
   "name": "Jaikuaa",
   "description": "Dataset curado sobre Paraguay: lugares, naturaleza, idioma guaraní, cultura, comida, personajes, historia, leyendas, sociedad y vida cotidiana.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "generated_at": "2026-05-25",
   "license": "Creative Commons BY-SA 4.0",
-  "total": 2927,
+  "total": 2940,
   "categories": {
-    "lugares": 580,
+    "lugares": 583,
     "naturaleza": 523,
     "idioma": 340,
     "cultura": 208,
     "comida": 151,
-    "personajes": 187,
-    "historia": 121,
+    "personajes": 189,
+    "historia": 130,
     "mitologia": 40,
-    "curiosos": 298,
+    "curiosos": 294,
     "etnografia": 69,
-    "sociedad": 410
+    "sociedad": 413
   },
-  "subcategories_count": 70,
+  "subcategories_count": 77,
   "tiers": {
-    "B": 2795,
-    "A": 132
+    "B": 2799,
+    "A": 141
   },
   "schema": {
     "id": "string identificador único",
@@ -3459,7 +3459,10 @@
       "title": "Emboscada",
       "body": "Distrito histórico, lugar de batalla durante la Guerra Grande. Mayor población afroparaguaya.",
       "year": null,
-      "location": null,
+      "location": {
+        "lat": -25.1167,
+        "lon": -57.0667
+      },
       "image_url": null,
       "departamento": "Cordillera",
       "source": "DGEEC / Atlas territorial paraguayo",
@@ -5154,7 +5157,10 @@
       "title": "Humaitá",
       "body": "Sitio histórico de la heroica defensa durante la Guerra Grande.",
       "year": null,
-      "location": null,
+      "location": {
+        "lat": -27.0381,
+        "lon": -58.5519
+      },
       "image_url": null,
       "departamento": "Ñeembucú",
       "source": "DGEEC / Atlas territorial paraguayo",
@@ -5214,7 +5220,10 @@
       "title": "Paso de Patria",
       "body": "Sitio histórico, escenario de batallas de la Guerra Grande.",
       "year": null,
-      "location": null,
+      "location": {
+        "lat": -27.2667,
+        "lon": -58.5833
+      },
       "image_url": null,
       "departamento": "Ñeembucú",
       "source": "DGEEC / Atlas territorial paraguayo",
@@ -24248,20 +24257,6 @@
       "_idx": 1573
     },
     {
-      "id": "per-0010",
-      "category": "personajes",
-      "subcategory": "procer",
-      "subcategory_label": "Prócer / héroe nacional",
-      "title": "Madame Lynch",
-      "body": "Otro nombre con que se conoce a Elisa Alicia Lynch. Considerada por algunos heroína nacional.",
-      "year": 1833,
-      "location": null,
-      "image_url": null,
-      "source": "Historia del Paraguay",
-      "tier": "B",
-      "_idx": 1574
-    },
-    {
       "id": "per-0011",
       "category": "personajes",
       "subcategory": "procer",
@@ -24344,34 +24339,6 @@
       "source": "Historia del Paraguay",
       "tier": "B",
       "_idx": 1580
-    },
-    {
-      "id": "per-0017",
-      "category": "personajes",
-      "subcategory": "procer",
-      "subcategory_label": "Prócer / héroe nacional",
-      "title": "Pedro Pablo Caballero",
-      "body": "Coronel paraguayo, hermano de Bernardino, héroe de varias batallas.",
-      "year": 1838,
-      "location": null,
-      "image_url": null,
-      "source": "Historia del Paraguay",
-      "tier": "B",
-      "_idx": 1581
-    },
-    {
-      "id": "per-0018",
-      "category": "personajes",
-      "subcategory": "procer",
-      "subcategory_label": "Prócer / héroe nacional",
-      "title": "Hilario Marcó",
-      "body": "Coronel paraguayo, sobreviviente de Cerro Corá. Fuente histórica del fin de la guerra.",
-      "year": 1830,
-      "location": null,
-      "image_url": null,
-      "source": "Historia del Paraguay",
-      "tier": "B",
-      "_idx": 1582
     },
     {
       "id": "per-0019",
@@ -26593,7 +26560,10 @@
       "title": "Fundición de Ybycuí",
       "body": "Primera fundición de hierro de Sudamérica, inaugurada en 1854. Destruida durante la Guerra Grande.",
       "year": 1854,
-      "location": null,
+      "location": {
+        "lat": -26.05,
+        "lon": -56.85
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "B",
@@ -26677,7 +26647,10 @@
       "title": "Batalla de Tuyutí",
       "body": "24 de mayo de 1866. Mayor batalla campal de Sudamérica, con más de 100.000 combatientes. Derrota paraguaya con altísimas bajas.",
       "year": 1866,
-      "location": null,
+      "location": {
+        "lat": -27.05,
+        "lon": -58.1
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "A",
@@ -26691,7 +26664,10 @@
       "title": "Batalla de Curupayty",
       "body": "22 de septiembre de 1866. Gran victoria paraguaya: 5.000 bajas aliadas contra solo 50 paraguayas.",
       "year": 1866,
-      "location": null,
+      "location": {
+        "lat": -27.1,
+        "lon": -58.7
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "A",
@@ -26705,7 +26681,10 @@
       "title": "Batalla de Humaitá",
       "body": "Fortaleza fluvial paraguaya, sitiada entre 1866 y 1868. Cayó tras larga resistencia.",
       "year": 1868,
-      "location": null,
+      "location": {
+        "lat": -27.0381,
+        "lon": -58.5519
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "A",
@@ -26719,7 +26698,10 @@
       "title": "Batalla de Acosta Ñu",
       "body": "16 de agosto de 1869. Niños y adolescentes paraguayos enfrentaron al ejército brasileño. Día del Niño paraguayo.",
       "year": 1869,
-      "location": null,
+      "location": {
+        "lat": -25.2667,
+        "lon": -56.65
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "A",
@@ -26733,7 +26715,10 @@
       "title": "Batalla de Piribebuy",
       "body": "12 de agosto de 1869. Defensa heroica de la capital provisional contra el ejército brasileño.",
       "year": 1869,
-      "location": null,
+      "location": {
+        "lat": -25.4833,
+        "lon": -57.0333
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "A",
@@ -26747,7 +26732,10 @@
       "title": "Batalla de Cerro Corá",
       "body": "1 de marzo de 1870. Último combate de la guerra. Murió el Mariscal López, fin del conflicto.",
       "year": 1870,
-      "location": null,
+      "location": {
+        "lat": -22.6333,
+        "lon": -56.0167
+      },
       "image_url": null,
       "source": "Historia del Paraguay",
       "tier": "A",
@@ -28854,20 +28842,6 @@
       "_idx": 1902
     },
     {
-      "id": "lyc-0071",
-      "category": "curiosos",
-      "subcategory": "curioso",
-      "subcategory_label": "Dato curioso / récord",
-      "title": "Estás aquí Bolaños",
-      "body": "Frase histórica del prócer Pedro Juan Caballero cuando fue capturado: 'Acá estamos los patriotas'.",
-      "year": null,
-      "location": null,
-      "image_url": null,
-      "source": "Curaduría Jaikuaa",
-      "tier": "B",
-      "_idx": 1903
-    },
-    {
       "id": "lyc-0072",
       "category": "curiosos",
       "subcategory": "curioso",
@@ -28894,20 +28868,6 @@
       "source": "Curaduría Jaikuaa",
       "tier": "B",
       "_idx": 1905
-    },
-    {
-      "id": "lyc-0074",
-      "category": "curiosos",
-      "subcategory": "curioso",
-      "subcategory_label": "Dato curioso / récord",
-      "title": "Mariscal sin guerra exterior previa",
-      "body": "El Mariscal López fue el primer Mariscal de Sudamérica sin haber peleado guerra extranjera antes.",
-      "year": null,
-      "location": null,
-      "image_url": null,
-      "source": "Curaduría Jaikuaa",
-      "tier": "B",
-      "_idx": 1906
     },
     {
       "id": "lyc-0075",
@@ -29358,20 +29318,6 @@
       "_idx": 1938
     },
     {
-      "id": "lyc-0107",
-      "category": "curiosos",
-      "subcategory": "curioso",
-      "subcategory_label": "Dato curioso / récord",
-      "title": "Sicaria de la Triple Alianza",
-      "body": "Pancha Garmendia es considerada la primera mártir femenina de la guerra grande.",
-      "year": null,
-      "location": null,
-      "image_url": null,
-      "source": "Curaduría Jaikuaa",
-      "tier": "B",
-      "_idx": 1939
-    },
-    {
       "id": "lyc-0108",
       "category": "curiosos",
       "subcategory": "curioso",
@@ -29384,20 +29330,6 @@
       "source": "Curaduría Jaikuaa",
       "tier": "B",
       "_idx": 1940
-    },
-    {
-      "id": "lyc-0109",
-      "category": "curiosos",
-      "subcategory": "curioso",
-      "subcategory_label": "Dato curioso / récord",
-      "title": "Mariscal en exilio",
-      "body": "Stroessner murió en Brasilia, exiliado. Sus restos están en el cementerio de Pomerode, Santa Catarina.",
-      "year": null,
-      "location": null,
-      "image_url": null,
-      "source": "Curaduría Jaikuaa",
-      "tier": "B",
-      "_idx": 1941
     },
     {
       "id": "lyc-0110",
@@ -43527,6 +43459,345 @@
       "source": "GBIF / iNaturalist",
       "tier": "B",
       "_idx": 3018
+    },
+    {
+      "id": "ta-0001",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Batalla del Riachuelo",
+      "subtitle": "11 de junio de 1865",
+      "body": "Combate naval en el río Paraná frente a Corrientes. La escuadra paraguaya al mando del capitán Pedro Ignacio Meza fue derrotada por la flota imperial brasileña de Francisco Manuel Barroso. Significó el fin del control fluvial paraguayo y selló la suerte logística de la guerra.",
+      "year": 1865,
+      "location": {
+        "lat": -27.4667,
+        "lon": -58.8333
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3019
+    },
+    {
+      "id": "ta-0002",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Batalla de Estero Bellaco",
+      "subtitle": "2 de mayo de 1866",
+      "body": "Primer choque mayor en suelo paraguayo tras el cruce aliado del Paraná. Las fuerzas paraguayas atacaron por sorpresa a la vanguardia aliada en el estero homónimo, infligiendo bajas significativas antes de retirarse. Antesala inmediata de Tuyutí.",
+      "year": 1866,
+      "location": {
+        "lat": -27.05,
+        "lon": -58.0
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3020
+    },
+    {
+      "id": "ta-0003",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Batalla de Boquerón del Sauce",
+      "subtitle": "16-18 de julio de 1866",
+      "body": "Ofensiva paraguaya contra las posiciones aliadas en el Boquerón. Tres días de combate sin resolución decisiva, con altísimas bajas en ambos bandos. Confirmó el carácter desgastante del frente del sur.",
+      "year": 1866,
+      "location": {
+        "lat": -27.06,
+        "lon": -58.12
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3021
+    },
+    {
+      "id": "ta-0004",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Paso de Humaitá",
+      "subtitle": "19 de febrero de 1868",
+      "body": "Tras casi dos años de bloqueo, seis acorazados brasileños forzaron el paso por delante de la fortaleza de Humaitá bajo intenso fuego artillero. La maniobra rompió el corazón del sistema defensivo paraguayo sobre el río Paraguay y aisló la guarnición.",
+      "year": 1868,
+      "location": {
+        "lat": -27.0381,
+        "lon": -58.5519
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3022
+    },
+    {
+      "id": "ta-0005",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Batalla de Ytororó",
+      "subtitle": "6 de diciembre de 1868",
+      "body": "Apertura de la campaña de Pikysyry. Las fuerzas paraguayas de Bernardino Caballero intentaron contener el avance aliado sobre Asunción en el arroyo Ytororó. La derrota dejó expuesta la línea de Lomas Valentinas.",
+      "year": 1868,
+      "location": {
+        "lat": -25.3,
+        "lon": -56.8
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3023
+    },
+    {
+      "id": "ta-0006",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Batalla de Avay",
+      "subtitle": "11 de diciembre de 1868",
+      "body": "Cinco días después de Ytororó, las fuerzas aliadas aplastaron al ejército paraguayo en Avay. Caballero perdió casi toda su división. Camino abierto hacia Itá-Ybaté.",
+      "year": 1868,
+      "location": {
+        "lat": -25.5,
+        "lon": -56.95
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3024
+    },
+    {
+      "id": "ta-0007",
+      "category": "historia",
+      "subcategory": "batalla",
+      "subcategory_label": "Batalla / evento militar",
+      "title": "Lomas Valentinas (Itá-Ybaté)",
+      "subtitle": "21-27 de diciembre de 1868",
+      "body": "Semana decisiva del frente sur. El reducto de Itá-Ybaté, defendido por el propio Solano López y la guardia del ejército, cayó tras seis días de combate ininterrumpido. Cierre de la campaña de Pikysyry y antesala de la caída de Asunción.",
+      "year": 1868,
+      "location": {
+        "lat": -25.55,
+        "lon": -57.05
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3025
+    },
+    {
+      "id": "ta-0010",
+      "category": "personajes",
+      "subcategory": "militar",
+      "subcategory_label": "Militar / héroe",
+      "title": "José Eduvigis Díaz",
+      "subtitle": "1833-1867",
+      "body": "General paraguayo, comandante en la victoria de Curupayty (1866). Herido en combate al año siguiente, murió a los 34 años. Considerado el militar más capaz de su generación. Muchos distritos paraguayos llevan su nombre.",
+      "year": 1833,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3026
+    },
+    {
+      "id": "ta-0011",
+      "category": "personajes",
+      "subcategory": "militar",
+      "subcategory_label": "Militar / héroe",
+      "title": "Pedro Ignacio Meza",
+      "subtitle": "1828-1865",
+      "body": "Capitán de navío paraguayo, comandante de la escuadra en la batalla del Riachuelo. Herido durante el combate, murió pocas semanas después. Su derrota marcó el principio del aislamiento fluvial del Paraguay.",
+      "year": 1828,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3027
+    },
+    {
+      "id": "ta-0012",
+      "category": "personajes",
+      "subcategory": "cronista",
+      "subcategory_label": "Cronista / testigo",
+      "title": "George Thompson",
+      "subtitle": "1839-1876",
+      "body": "Ingeniero militar británico al servicio del Paraguay. Diseñó las fortificaciones de Humaitá y combatió hasta la caída de Angostura. Su libro *La guerra del Paraguay* (1869), escrito como testigo directo, es una de las fuentes primarias clave del conflicto.",
+      "year": 1839,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3028
+    },
+    {
+      "id": "ta-0013",
+      "category": "personajes",
+      "subcategory": "cronista",
+      "subcategory_label": "Cronista / testigo",
+      "title": "Natalicio Talavera",
+      "subtitle": "1839-1867",
+      "body": "Poeta y periodista paraguayo, primer corresponsal de guerra del país. Cubrió el frente desde 1865 para *El Semanario*, dejando crónicas en verso y prosa. Murió de cólera durante la campaña, a los 28 años.",
+      "year": 1839,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3029
+    },
+    {
+      "id": "ta-0014",
+      "category": "personajes",
+      "subcategory": "militar",
+      "subcategory_label": "Militar / héroe",
+      "title": "Vicente Barrios",
+      "subtitle": "general y cuñado del Mariscal López",
+      "body": "General paraguayo, casado con Inocencia López, hermana del Mariscal. Comandante en Curuzú y otras posiciones del Cuadrilátero de Humaitá. Fue ejecutado por orden de López en 1868 durante los procesos políticos de la retirada.",
+      "year": 1825,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3030
+    },
+    {
+      "id": "ta-0020",
+      "category": "historia",
+      "subcategory": "sistema_defensivo",
+      "subcategory_label": "Sistema defensivo",
+      "title": "Cuadrilátero de Humaitá",
+      "subtitle": "la fortaleza fluvial del Paraguay",
+      "body": "Sistema defensivo paraguayo sobre el río Paraguay compuesto por cuatro posiciones: Humaitá, Curupayty, Curuzú y Timbó. Diseñado para cerrar el paso a la flota enemiga y proteger la línea de comunicación con Asunción. Sostuvo el frente entre 1866 y 1868.",
+      "year": 1866,
+      "location": {
+        "lat": -27.05,
+        "lon": -58.55
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3031
+    },
+    {
+      "id": "ta-0021",
+      "category": "sociedad",
+      "subcategory": "memoria_historica",
+      "subcategory_label": "Memoria histórica",
+      "title": "Las Residentas",
+      "subtitle": "mujeres en la retirada",
+      "body": "Mujeres paraguayas que siguieron al ejército en la larga retirada desde Lomas Valentinas hasta Cerro Corá, atravesando la cordillera con niños y heridos. Cargaron víveres, cuidaron enfermos y sostuvieron la economía de subsistencia del éxodo. Símbolo central de la memoria femenina de la guerra.",
+      "year": 1869,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3032
+    },
+    {
+      "id": "ta-0022",
+      "category": "sociedad",
+      "subcategory": "memoria_historica",
+      "subcategory_label": "Memoria histórica",
+      "title": "Las Destinadas",
+      "subtitle": "mujeres prisioneras políticas",
+      "body": "Mujeres acusadas de conspiración durante la fase final de la guerra y obligadas a marchar como prisioneras tras el ejército en retirada, entre ellas familiares de oficiales caídos en desgracia. Muchas murieron de hambre y agotamiento. Capítulo doloroso poco difundido del conflicto.",
+      "year": 1869,
+      "location": null,
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3033
+    },
+    {
+      "id": "ta-0023",
+      "category": "sociedad",
+      "subcategory": "memoria_historica",
+      "subcategory_label": "Memoria histórica",
+      "title": "Niños mártires de Acosta Ñu",
+      "subtitle": "el día del niño paraguayo",
+      "body": "En la batalla de Acosta Ñu (16 de agosto de 1869), agotada la población masculina adulta, el ejército paraguayo formó batallones con niños y adolescentes que enfrentaron al Conde D'Eu. La matanza dio origen a la fecha del Día del Niño en Paraguay.",
+      "year": 1869,
+      "location": {
+        "lat": -25.2667,
+        "lon": -56.65
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3034
+    },
+    {
+      "id": "ta-0024",
+      "category": "historia",
+      "subcategory": "memoria_historica",
+      "subcategory_label": "Memoria histórica",
+      "title": "Campaña de Pikysyry",
+      "subtitle": "el flanqueo final, 1868",
+      "body": "Maniobra del mariscal Caxias en diciembre de 1868: rodeó la línea paraguaya de Pikysyry abriendo una picada en el Chaco y cayendo por la retaguardia. Encadenó las derrotas de Ytororó, Avay y Lomas Valentinas en menos de un mes, dejando abierto el camino a Asunción.",
+      "year": 1868,
+      "location": {
+        "lat": -25.45,
+        "lon": -57.0
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3035
+    },
+    {
+      "id": "ta-0030",
+      "category": "lugares",
+      "subcategory": "sitio_historico",
+      "subcategory_label": "Sitio histórico",
+      "title": "Ruinas de Humaitá",
+      "subtitle": "la iglesia de San Carlos Borromeo",
+      "body": "Restos de la iglesia colonial de Humaitá, destruida durante el bombardeo de 1868. Sus muros calcinados son el monumento más reconocible de la Guerra Grande y emblema del departamento de Ñeembucú.",
+      "year": null,
+      "location": {
+        "lat": -27.0381,
+        "lon": -58.5519
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "A",
+      "_idx": 3036
+    },
+    {
+      "id": "ta-0031",
+      "category": "lugares",
+      "subcategory": "sitio_historico",
+      "subcategory_label": "Sitio histórico",
+      "title": "Curupayty",
+      "subtitle": "la trinchera de la gran victoria",
+      "body": "Posición fortificada paraguaya al sur de Humaitá, escenario de la victoria del 22 de septiembre de 1866. Defendida por José Eduvigis Díaz, infligió a los aliados la mayor derrota de la guerra y frenó su avance por un año entero.",
+      "year": null,
+      "location": {
+        "lat": -27.1,
+        "lon": -58.7
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3037
+    },
+    {
+      "id": "ta-0032",
+      "category": "lugares",
+      "subcategory": "sitio_historico",
+      "subcategory_label": "Sitio histórico",
+      "title": "Paso Pucú",
+      "subtitle": "cuartel general del Mariscal López",
+      "body": "Posición a retaguardia de Humaitá donde Solano López instaló su comando entre 1866 y 1868. Desde ahí dirigió la defensa del Cuadrilátero. Hoy paraje rural de Ñeembucú con vestigios arqueológicos.",
+      "year": null,
+      "location": {
+        "lat": -27.08,
+        "lon": -58.4
+      },
+      "image_url": null,
+      "source": "Curaduría Jaikuaa / historiografía estándar de la Guerra Grande",
+      "tier": "B",
+      "_idx": 3038
     }
   ]
 }

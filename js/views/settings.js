@@ -47,7 +47,7 @@ export function openSettings() {
         <div class="settings-row">
           <div>
             <div class="label">Solo Tier A</div>
-            <div class="hint">Mostrar únicamente los 145 destacados.</div>
+            <div class="hint">Mostrar únicamente los 141 destacados.</div>
           </div>
           <button class="toggle ${filters.tierAOnly ? 'on' : ''}" data-action="settings-toggle-tier" role="switch" aria-checked="${filters.tierAOnly}"></button>
         </div>
@@ -87,7 +87,7 @@ function openAbout() {
         <span class="serif italic">Jaikuaa</span> significa <em>conozcamos</em> o <em>sabemos</em> en guaraní inclusivo. La forma <span class="serif italic">ja-</span> incluye a quien lee en la acción.
       </p>
       <p style="color:var(--fg-secondary); line-height:1.7; margin-top:var(--sp-4)">
-        Una postal nocturna del Paraguay: 2927 tarjetas curadas sobre lugares, naturaleza, idioma, cultura, comida, personajes, historia, leyendas y vida cotidiana. No es Wikipedia. Es un <em>descubridor poético</em> para abrir cada día.
+        Una postal nocturna del Paraguay: 2940 tarjetas curadas sobre lugares, naturaleza, idioma, cultura, comida, personajes, historia, leyendas y vida cotidiana. No es Wikipedia. Es un <em>descubridor poético</em> para abrir cada día.
       </p>
       <p class="mono" style="color:var(--fg-tertiary); font-size:0.75rem; margin-top:var(--sp-5); line-height:1.6">
         Curaduría: AMPOST · Licencia CC BY-SA 4.0 · Diseñado en Asunción · 2026
