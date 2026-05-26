@@ -234,9 +234,8 @@ function bindServiceWorker() {
 
   window.addEventListener('load', async () => {
     try {
-      // Purgar SW registrado en path viejo (/service-worker.js) si existe.
-      const all = await navigator.serviceWorker.getRegistrations();
-      for (const r of all) {
+      // Purgar SW del path viejo (/service-worker.js) si existe.
+      for (const r of await navigator.serviceWorker.getRegistrations()) {
         if (r.active && r.active.scriptURL.endsWith('/service-worker.js')) await r.unregister();
       }
       const reg = await navigator.serviceWorker.register('sw.js');
