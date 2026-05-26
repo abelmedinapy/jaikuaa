@@ -13,7 +13,7 @@ export function bindHoloTilt() {
   const autoTick = () => {
     if (!autoActive) return;
     t += 0.008;
-    apply(Math.sin(t) * 4, Math.sin(t * 1.3) * 3);
+    apply(Math.sin(t) * 10, Math.sin(t * 1.3) * 7);
     requestAnimationFrame(autoTick);
   };
   requestAnimationFrame(autoTick);
@@ -25,8 +25,8 @@ export function bindHoloTilt() {
       autoActive = false;
       // Inclinás derecha (gamma>0) → pattern se mueve a la izquierda
       // Inclinás adelante (beta<45) → pattern se mueve hacia arriba
-      const px = Math.max(-12, Math.min(12, -e.gamma * 0.35));
-      const py = Math.max(-10, Math.min(10, -(e.beta - 45) * 0.25));
+      const px = Math.max(-32, Math.min(32, -e.gamma * 0.85));
+      const py = Math.max(-28, Math.min(28, -(e.beta - 45) * 0.65));
       apply(px, py);
     });
   };
@@ -50,6 +50,6 @@ export function bindHoloTilt() {
     const r = card.getBoundingClientRect();
     const nx = (e.clientX - r.left) / r.width - 0.5;
     const ny = (e.clientY - r.top) / r.height - 0.5;
-    apply(-nx * 12, -ny * 10);
+    apply(-nx * 32, -ny * 26);
   });
 }
