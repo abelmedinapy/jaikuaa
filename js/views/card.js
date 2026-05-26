@@ -1,5 +1,5 @@
 // CardView: el corazón de Jaikuaa.
-import { byId, CATEGORY_COLOR, CATEGORY_LABEL, filterItems, getRelated, randomItem, tierAItems } from '../data.js';
+import { byId, CATEGORY_COLOR, CATEGORY_LABEL, filterItems, getRelated, meta, randomItem, tierAItems } from '../data.js';
 import { getState, isFav, pushHistory, toggleFav, historyPrev, historyNext, hasPrev, seenTodayCount } from '../store.js';
 import { ICONS } from '../utils/icons.js';
 import { showToast } from '../app.js';
@@ -36,7 +36,8 @@ function renderCardHTML(entry) {
     : '';
   const tierHtml = entry.tier === 'A' ? `<span class="card-seal" title="Destacado" aria-label="Destacado">★</span>` : '';
   const subLabel = entry.subcategory_label || entry.subcategory || '';
-  const catalog = entry.id.toUpperCase().replace('-', ' · ');
+  const total = (meta()?.total || 0).toLocaleString('es');
+  const catalog = `${entry.id.toUpperCase().replace('-', ' · ')} / ${total}`;
 
   return `
     <article class="card${entry.tier === 'A' ? ' is-tier-a' : ''}" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">

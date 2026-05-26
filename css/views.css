@@ -32,7 +32,7 @@
 .discover-btn svg { width: 16px; height: 16px; }
 .card {
   width: 100%; max-width: 620px;
-  background: radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.04), transparent 60%), linear-gradient(180deg, var(--bg-card) 0%, #131119 100%);
+  background: radial-gradient(ellipse 110% 100% at 50% 50%, transparent 55%, rgba(0,0,0,0.22)), radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.045), transparent 60%), linear-gradient(180deg, var(--bg-card) 0%, #121019 100%);
   border: 1px solid color-mix(in srgb, var(--cat-color, var(--border-subtle)) 45%, var(--border-subtle));
   border-left: 4px solid var(--cat-color, var(--border-strong));
   border-radius: 22px;
@@ -113,6 +113,7 @@
   padding-top: var(--sp-4); border-top: 1px dashed var(--border-subtle);
 }
 .related-label { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-tertiary); }
+.related-label::before { content: "✦"; color: var(--cat-color, var(--fg-tertiary)); margin-right: 6px; font-style: normal; opacity: 0.7; }
 .related-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); font-family: var(--font-serif); font-size: 1rem; line-height: 1.4; }
 .related-link {
   position: relative; color: var(--fg-secondary); cursor: pointer;
@@ -153,12 +154,8 @@
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--fg-tertiary); flex-wrap: wrap;
 }
-.card-cat-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--cat-color, var(--fg-tertiary));
-  flex-shrink: 0; margin-right: var(--sp-1);
-  box-shadow: 0 0 8px var(--cat-color, transparent);
-}
+.card-cat-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cat-color, var(--fg-tertiary)); flex-shrink: 0; margin-right: var(--sp-1); box-shadow: 0 0 10px var(--cat-color, transparent); animation: dotPulse 2.8s ease-in-out infinite; }
+@keyframes dotPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: 0.85; } }
 .card-cat-link {
   color: var(--fg-primary); cursor: pointer;
   background: color-mix(in srgb, var(--cat-color, var(--border-strong)) 18%, transparent);
