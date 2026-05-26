@@ -1,6 +1,6 @@
 // CardView: el corazón de Jaikuaa.
 import { byId, CATEGORY_COLOR, CATEGORY_LABEL, filterItems, getRelated, randomItem, tierAItems } from '../data.js';
-import { getState, isFav, pushHistory, toggleFav, historyPrev, historyNext } from '../store.js';
+import { getState, isFav, pushHistory, toggleFav, historyPrev, historyNext, hasPrev, seenTodayCount } from '../store.js';
 import { ICONS } from '../utils/icons.js';
 import { showToast } from '../app.js';
 
@@ -79,17 +79,28 @@ function pickPool() {
 
 function mountStage(html) {
   const root = view();
+  const count = seenTodayCount();
+  const prevBtn = hasPrev()
+    ? `<button class="prev-btn" data-action="prev-card" aria-label="Tarjeta anterior" title="Anterior">←</button>`
+    : `<span class="prev-btn-placeholder" aria-hidden="true"></span>`;
+  const countLine = count > 0
+    ? `<div class="session-count" aria-label="Tarjetas descubiertas hoy">${count} ${count === 1 ? 'descubierta' : 'descubiertas'} hoy</div>`
+    : '';
   root.innerHTML = `
     <div class="card-stage">
       ${html}
-      <button class="discover-btn" data-action="discover-next" aria-label="Otra tarjeta">
-        <span>Otra</span> ${ICONS.dice}
-      </button>
+      ${countLine}
+      <div class="discover-row">
+        ${prevBtn}
+        <button class="discover-btn" data-action="discover-next" aria-label="Otra tarjeta">
+          <span>Otra</span> ${ICONS.dice}
+        </button>
+      </div>
     </div>
   `;
 }
 
-export function showCard(entry, { recordHistory = true } = {}) {
+export function showCard(entry, { recordHistory = true, direction = null } = {}) {
   if (!entry) return;
   currentEntry = entry;
   const root = view();
@@ -97,10 +108,15 @@ export function showCard(entry, { recordHistory = true } = {}) {
   const doMount = () => {
     mountStage(renderCardHTML(entry));
     if (recordHistory) pushHistory(entry.id);
+    if (direction != null) {
+      const newCard = root.querySelector('.card');
+      if (newCard) newCard.classList.add(direction > 0 ? 'enter-from-right' : 'enter-from-left');
+    }
   };
   if (prev) {
     prev.classList.add('leaving');
-    setTimeout(doMount, 130);
+    if (direction != null) prev.classList.add(direction > 0 ? 'leave-left' : 'leave-right');
+    setTimeout(doMount, direction != null ? 180 : 130);
   } else {
     doMount();
   }
@@ -133,13 +149,7 @@ export function navHistory(direction) {
   const id = direction < 0 ? historyPrev() : historyNext();
   if (!id) { if (direction > 0) nextRandom(); return; }
   const it = byId(id);
-  if (it) {
-    currentEntry = it;
-    const root = view();
-    const prev = root.querySelector('.card');
-    const doMount = () => mountStage(renderCardHTML(it));
-    if (prev) { prev.classList.add('leaving'); setTimeout(doMount, 130); } else { doMount(); }
-  }
+  if (it) showCard(it, { recordHistory: false, direction });
 }
 
 // Fav animation pulse (double-tap or button)

@@ -145,6 +145,11 @@ function bindGlobalListeners() {
       return;
     }
 
+    if (action === 'prev-card') {
+      navHistory(-1);
+      return;
+    }
+
     if (action === 'filter-by-cat') {
       // Single-category quick filter
       const cat = target.dataset.cat;

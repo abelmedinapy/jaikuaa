@@ -5,26 +5,21 @@
 
 /* ============ CardView ============ */
 .card-stage {
-  flex: 1;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: var(--sp-5);
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: var(--sp-4);
   padding: var(--sp-6) var(--sp-4);
   min-height: calc(100vh - var(--nav-h) - var(--safe-bottom) - var(--safe-top));
   min-height: calc(100dvh - var(--nav-h) - var(--safe-bottom) - var(--safe-top));
   user-select: none; -webkit-user-select: none;
 }
-.discover-btn {
-  display: inline-flex; align-items: center; gap: var(--sp-2);
-  padding: 10px 18px 10px 22px;
-  background: transparent; border: 1px solid var(--border-subtle); border-radius: 999px;
-  color: var(--fg-secondary); cursor: pointer;
-  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
-  opacity: 0; animation: discoverIn var(--t-slow) var(--easing) 200ms forwards;
-}
+.discover-row { display: flex; align-items: center; justify-content: center; gap: var(--sp-3); opacity: 0; animation: discoverIn var(--t-slow) var(--easing) 200ms forwards; }
 @keyframes discoverIn { to { opacity: 1; } }
+.session-count { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-tertiary); text-align: center; opacity: 0; animation: discoverIn var(--t-slow) var(--easing) 200ms forwards; }
+.prev-btn, .prev-btn-placeholder { width: 40px; height: 40px; flex-shrink: 0; }
+.prev-btn { display: grid; place-items: center; background: transparent; border: 1px solid var(--border-subtle); border-radius: 50%; color: var(--fg-secondary); cursor: pointer; font-family: var(--font-serif); font-size: 1.1rem; line-height: 1; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), transform var(--t-fast); }
+.prev-btn:hover { color: var(--fg-primary); border-color: var(--border-strong); background: var(--bg-card); }
+.prev-btn:active { transform: scale(0.92); }
+.discover-btn { display: inline-flex; align-items: center; gap: var(--sp-2); padding: 10px 18px 10px 22px; background: transparent; border: 1px solid var(--border-subtle); border-radius: 999px; color: var(--fg-secondary); cursor: pointer; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), transform var(--t-fast); }
 .discover-btn:hover { color: var(--fg-primary); border-color: var(--border-strong); background: var(--bg-card); }
 .discover-btn:active { transform: scale(0.96); }
 .discover-btn svg { width: 16px; height: 16px; opacity: 0.85; }
@@ -46,7 +41,15 @@
 }
 @keyframes cardIn { to { opacity: 1; transform: none; } }
 .card.leaving { animation: cardOut var(--t-fast) var(--easing) forwards; }
-@keyframes cardOut { to { opacity: 0; transform: translateY(-8px); } }
+.card.leaving.leave-left  { animation: cardOutLeft 200ms var(--easing) forwards; }
+.card.leaving.leave-right { animation: cardOutRight 200ms var(--easing) forwards; }
+.card.enter-from-right { animation: cardInFromRight 240ms var(--easing) forwards; }
+.card.enter-from-left  { animation: cardInFromLeft  240ms var(--easing) forwards; }
+@keyframes cardOut         { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes cardOutLeft     { to { opacity: 0; transform: translateX(-28vw) rotate(-3deg); } }
+@keyframes cardOutRight    { to { opacity: 0; transform: translateX( 28vw) rotate( 3deg); } }
+@keyframes cardInFromRight { from { opacity: 0; transform: translateX( 24vw); } to { opacity: 1; transform: none; } }
+@keyframes cardInFromLeft  { from { opacity: 0; transform: translateX(-24vw); } to { opacity: 1; transform: none; } }
 
 .card-hero { display: flex; flex-direction: column; gap: var(--sp-3); }
 .card-title {

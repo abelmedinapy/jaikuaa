@@ -3,6 +3,11 @@ import { storage } from './utils/storage.js';
 
 const listeners = new Set();
 
+const todayKey = () => new Date().toISOString().slice(0, 10);
+const seenSnap = storage.get('seen_today', { date: todayKey(), ids: [] });
+const seenToday = seenSnap.date === todayKey() ? new Set(seenSnap.ids) : new Set();
+if (seenSnap.date !== todayKey()) storage.set('seen_today', { date: todayKey(), ids: [] });
+
 const initial = {
   ready: false,
   route: '',
@@ -14,6 +19,8 @@ const initial = {
   visits: storage.get('visits', 0),
   installPrompt: null,
   online: navigator.onLine,
+  seenToday,
+  seenTodayDate: todayKey(),
 };
 
 const state = { ...initial };
@@ -77,7 +84,22 @@ export function pushHistory(id) {
     if (state.history.length > 50) state.history.shift();
   }
   state.histIdx = state.history.length - 1;
+  markSeen(id);
 }
+
+// Daily seen counter (resets at midnight local time)
+function markSeen(id) {
+  const today = todayKey();
+  if (state.seenTodayDate !== today) {
+    state.seenToday = new Set();
+    state.seenTodayDate = today;
+  }
+  state.seenToday.add(id);
+  storage.set('seen_today', { date: today, ids: [...state.seenToday] });
+}
+export function seenTodayCount() { return state.seenToday.size; }
+export function hasPrev() { return state.histIdx > 0; }
+export function hasNext() { return state.histIdx < state.history.length - 1; }
 export function historyPrev() {
   if (state.histIdx <= 0) return null;
   state.histIdx -= 1;
