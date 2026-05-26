@@ -119,6 +119,15 @@
   text-align: center;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast-action {
+  margin-left: var(--sp-3); padding: 4px 12px;
+  background: var(--accent-yellow); color: var(--bg-base);
+  border-radius: 999px; cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: transform var(--t-fast);
+}
+.toast-action:active { transform: scale(0.95); }
 
 /* Sheet */
 .sheet {

@@ -222,15 +222,51 @@ function bindGlobalListeners() {
   subscribe(() => { /* hook for future reactive UI */ });
 }
 
-// ---- Service worker ----
+// ---- Service worker (auto-update sin fricción) ----
 function bindServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js').catch((err) => {
-        console.warn('SW register failed', err);
+  if (!('serviceWorker' in navigator)) return;
+  let reloaded = false;
+  let updateToastShown = false;
+  // Si NO había controller al inicio, la primera activación es la instalación
+  // inicial — no es un update y no debe disparar reload.
+  let ignoreNextControllerChange = !navigator.serviceWorker.controller;
+
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('service-worker.js');
+      // Check periódico cada 5 min mientras la pestaña está abierta
+      setInterval(() => reg.update().catch(() => {}), 5 * 60 * 1000);
+      // Check al volver a la pestaña
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) reg.update().catch(() => {});
       });
-    });
-  }
+    } catch (err) { console.warn('SW register failed', err); }
+  });
+
+  // Cuando un nuevo SW toma control, decidir cómo aplicar
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (ignoreNextControllerChange) { ignoreNextControllerChange = false; return; }
+    if (reloaded) return;
+    reloaded = true;
+    if (document.hidden) {
+      location.reload();
+    } else if (!updateToastShown) {
+      updateToastShown = true;
+      showUpdateAvailable();
+    }
+  });
+}
+
+function showUpdateAvailable() {
+  const t = document.getElementById('toast');
+  if (!t) { location.reload(); return; }
+  t.innerHTML = `Nueva versión disponible <button class="toast-action" type="button">actualizar</button>`;
+  t.classList.add('show');
+  let applied = false;
+  const apply = () => { if (applied) return; applied = true; location.reload(); };
+  t.querySelector('.toast-action').addEventListener('click', apply);
+  // Auto-apply after 12s — siempre se actualiza, sin perderte updates
+  setTimeout(apply, 12000);
 }
 
 // ---- Install prompt ----
