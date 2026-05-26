@@ -65,7 +65,13 @@ function renderCardHTML(entry) {
         </div>
       </footer>
 
-      <div class="fav-burst" aria-hidden="true">${ICONS.starFill}</div>
+      <div class="fav-burst" aria-hidden="true">
+        ${ICONS.starFill}
+        <span class="burst-p" style="--bx:42px;--by:-32px"></span>
+        <span class="burst-p" style="--bx:-38px;--by:-28px"></span>
+        <span class="burst-p" style="--bx:34px;--by:34px"></span>
+        <span class="burst-p" style="--bx:-36px;--by:30px"></span>
+      </div>
     </article>
   `;
 }

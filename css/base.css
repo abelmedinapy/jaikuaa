@@ -5,8 +5,20 @@ html, body { margin: 0; padding: 0; height: 100%; }
 html {
   background: var(--bg-base);
   color-scheme: dark;
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
+}
+
+/* Film grain — textura sutil tipo papel/película sobre todo el viewport */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 1;
+  pointer-events: none; opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
 }
 
 body {
@@ -59,7 +71,8 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible {
   outline: 2px solid var(--accent-yellow);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 input, textarea {
@@ -81,10 +94,11 @@ a {
 
 img { max-width: 100%; display: block; }
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; transition: background var(--t-fast); }
+::-webkit-scrollbar-thumb:hover { background: var(--fg-tertiary); }
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
 
 /* utilities */
 .mono { font-family: var(--font-mono); letter-spacing: 0.02em; }
