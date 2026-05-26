@@ -110,12 +110,10 @@
   position: fixed; left: 50%; transform: translate(-50%, 24px);
   bottom: calc(var(--nav-h) + var(--safe-bottom) + 24px);
   background: color-mix(in srgb, var(--bg-elevated) 78%, transparent);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  color: var(--fg-primary);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: var(--sp-3) var(--sp-5);
-  border-radius: 999px; font-size: 0.85rem; font-weight: 500;
+  backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+  color: var(--fg-primary); border: 1px solid rgba(255,255,255,0.1);
+  padding: var(--sp-3) var(--sp-5); border-radius: 999px;
+  font-size: 0.85rem; font-weight: 500;
   box-shadow: var(--shadow-modal), inset 0 1px 0 rgba(255,255,255,0.08);
   opacity: 0; pointer-events: none;
   transition: opacity var(--t-base) var(--easing), transform var(--t-base) var(--easing);
