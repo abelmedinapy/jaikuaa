@@ -19,6 +19,7 @@ const PRECACHE = [
   'js/utils/icons.js',
   'js/utils/storage.js',
   'js/utils/share.js',
+  'js/utils/holo-tilt.js',
   'js/views/card.js',
   'js/views/search.js',
   'js/views/favorites.js',
