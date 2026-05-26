@@ -23,9 +23,22 @@ function renderActiveFilters() {
   return `<div class="active-filters">${chips}${tier}</div>`;
 }
 
-export function openSettings() {
+async function getSWVersion() {
+  if (!navigator.serviceWorker || !navigator.serviceWorker.controller) return null;
+  return new Promise((resolve) => {
+    const ch = new MessageChannel();
+    let done = false;
+    ch.port1.onmessage = (e) => { if (done) return; done = true; resolve((e.data && e.data.version) || null); };
+    try { navigator.serviceWorker.controller.postMessage({ type: 'VERSION' }, [ch.port2]); } catch { resolve(null); }
+    setTimeout(() => { if (!done) { done = true; resolve(null); } }, 800);
+  });
+}
+
+export async function openSettings() {
   const m = meta() || { total: '?', version: '1.0.0' };
   const { filters, installPrompt } = getState();
+  const swV = await getSWVersion();
+  const swLabel = swV ? swV.replace('jaikuaa-v', '') : 'sin SW';
   const el = sheet();
   el.innerHTML = `
     <div class="sheet-inner" role="dialog" aria-label="Ajustes">
@@ -61,7 +74,7 @@ export function openSettings() {
         <button class="btn is-block is-danger" data-action="settings-clear-favs" style="margin-top:var(--sp-3)">Borrar mis favoritos</button>
       </div>
 
-      <div class="settings-footer">v${m.version || '1.0.0'} · ${(m.total || 0).toLocaleString('es')} tarjetas · hecho con ❤︎ en Asunción</div>
+      <div class="settings-footer">app v${swLabel} · datos v${m.version || '?'} · ${(m.total || 0).toLocaleString('es')} tarjetas · hecho con ❤︎ en Asunción</div>
     </div>
   `;
   el.hidden = false;
