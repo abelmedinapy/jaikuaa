@@ -31,7 +31,9 @@ function renderCardHTML(entry) {
   const fav = isFav(entry.id);
   const yearHtml = entry.year ? `<span class="card-title-year">${entry.year}</span>` : '';
   const subtitleHtml = entry.subtitle ? `<p class="card-subtitle">${escapeHtml(entry.subtitle)}</p>` : '';
-  const bodyHtml = entry.body ? `<p class="card-body">${escapeHtml(entry.body)}</p>` : '';
+  const bodyHtml = entry.body
+    ? `<p class="card-body${entry.body.length > 120 ? ' has-dropcap' : ''}">${escapeHtml(entry.body)}</p>`
+    : '';
   const tierHtml = entry.tier === 'A' ? `<span class="card-tier-badge" title="Destacado" aria-label="Destacado">★</span>` : '';
   const subLabel = entry.subcategory_label || entry.subcategory || '';
 

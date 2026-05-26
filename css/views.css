@@ -19,21 +19,29 @@
 .prev-btn { display: grid; place-items: center; background: transparent; border: 1px solid var(--border-subtle); border-radius: 50%; color: var(--fg-secondary); cursor: pointer; font-family: var(--font-serif); font-size: 1.1rem; line-height: 1; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), transform var(--t-fast); }
 .prev-btn:hover { color: var(--fg-primary); border-color: var(--border-strong); background: var(--bg-card); }
 .prev-btn:active { transform: scale(0.92); }
-.discover-btn { display: inline-flex; align-items: center; gap: var(--sp-2); padding: 10px 18px 10px 22px; background: transparent; border: 1px solid var(--border-subtle); border-radius: 999px; color: var(--fg-secondary); cursor: pointer; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), transform var(--t-fast); }
-.discover-btn:hover { color: var(--fg-primary); border-color: var(--border-strong); background: var(--bg-card); }
+.discover-btn { display: inline-flex; align-items: center; gap: var(--sp-2); padding: 14px 22px 14px 26px; background: var(--accent-green); border: 1px solid var(--accent-green); border-radius: 999px; color: #FFFFFF; cursor: pointer; font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; box-shadow: 0 8px 24px -6px color-mix(in srgb, var(--accent-green) 60%, transparent), inset 0 1px 0 rgba(255,255,255,0.15); transition: box-shadow var(--t-fast), transform var(--t-fast); }
+.discover-btn:hover { box-shadow: 0 12px 32px -6px color-mix(in srgb, var(--accent-green) 75%, transparent), 0 0 0 5px color-mix(in srgb, var(--accent-green) 22%, transparent), inset 0 1px 0 rgba(255,255,255,0.2); transform: translateY(-1px); }
 .discover-btn:active { transform: scale(0.96); }
-.discover-btn svg { width: 16px; height: 16px; opacity: 0.85; }
+.discover-btn svg { width: 16px; height: 16px; }
 .card {
   width: 100%; max-width: 620px;
   background: radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.025), transparent 60%), linear-gradient(180deg, var(--bg-card) 0%, #131119 100%);
   border: 1px solid var(--border-subtle); border-radius: 22px;
   padding: clamp(1.75rem, 5vw, 3rem);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 2px 4px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.5), 0 32px 96px rgba(0,0,0,0.3), 0 0 60px -8px color-mix(in srgb, var(--cat-color, transparent) 22%, transparent);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 2px 4px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.5), 0 32px 96px rgba(0,0,0,0.3), 0 0 80px -4px color-mix(in srgb, var(--cat-color, transparent) 35%, transparent), 0 0 0 1px color-mix(in srgb, var(--cat-color, transparent) 18%, transparent);
   display: flex; flex-direction: column; gap: var(--sp-7);
   cursor: pointer; position: relative;
   opacity: 0; transform: translateY(8px);
   animation: cardIn var(--t-base) var(--easing) forwards;
 }
+/* Deck: 2 cards fantasma apiladas detrás (sugieren más por descubrir) */
+.card::before, .card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 22px; pointer-events: none;
+}
+.card::before { transform: scale(0.96) translateY(14px); opacity: 0.6; }
+.card::after  { transform: scale(0.92) translateY(28px); opacity: 0.32; }
 @keyframes cardIn { to { opacity: 1; transform: none; } }
 .card.leaving { animation: cardOut var(--t-fast) var(--easing) forwards; }
 .card.leaving.leave-up   { animation: cardOutUp 220ms var(--easing) forwards; }
@@ -72,6 +80,7 @@
   line-height: 1.7; color: var(--fg-primary);
   max-width: 60ch; margin: var(--sp-3) 0 0;
 }
+.card-body.has-dropcap::first-letter { font-family: var(--font-serif); font-weight: 500; font-style: italic; font-size: 3.6em; line-height: 0.85; float: left; margin: 4px 8px -4px 0; color: var(--cat-color, var(--fg-primary)); }
 
 .card-related {
   display: flex; flex-direction: column; gap: var(--sp-2);
@@ -136,11 +145,12 @@
   box-shadow: 0 0 8px var(--cat-color, transparent);
 }
 .card-cat-link {
-  color: var(--fg-secondary); cursor: pointer;
-  border-bottom: 1px dotted transparent;
-  transition: color var(--t-fast), border-color var(--t-fast);
+  color: var(--fg-primary); cursor: pointer;
+  background: color-mix(in srgb, var(--cat-color, var(--border-strong)) 18%, transparent);
+  padding: 3px 9px; border-radius: 6px;
+  transition: background var(--t-fast), transform var(--t-fast);
 }
-.card-cat-link:hover { color: var(--fg-primary); border-bottom-color: currentColor; }
+.card-cat-link:hover { background: color-mix(in srgb, var(--cat-color, var(--border-strong)) 32%, transparent); transform: translateY(-1px); }
 .card-meta .sep { color: var(--border-strong); }
 .card-tier-badge {
   margin-left: auto; color: var(--accent-yellow);
