@@ -118,9 +118,12 @@
 }
 .toast-action:active { transform: scale(0.95); }
 
-/* Sheet */
+/* Sheet — respeta el bottom nav, no lo cubre */
 .sheet {
-  position: fixed; inset: 0; z-index: 150;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + var(--safe-bottom));
+  z-index: 150;
   display: flex; align-items: flex-end;
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -129,32 +132,48 @@
 .sheet.open { opacity: 1; }
 .sheet[hidden] { display: none; }
 .sheet-inner {
-  width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
+  width: 100%; max-width: 560px; margin: 0 auto;
   background: var(--bg-elevated);
   border-radius: 24px 24px 0 0;
-  padding: var(--sp-4) var(--sp-5) calc(var(--sp-7) + var(--safe-bottom));
-  max-height: 85vh;
-  overflow-y: auto;
+  padding: var(--sp-3) var(--sp-5) var(--sp-6);
+  max-height: 80vh; overflow-y: auto;
   transform: translateY(24px);
   transition: transform var(--t-base) var(--easing);
   border-top: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-modal);
+  position: relative;
 }
 .sheet.open .sheet-inner { transform: none; }
 .sheet-handle {
-  width: 36px; height: 4px;
+  width: 44px; height: 5px;
   background: var(--border-strong);
   border-radius: 999px;
-  margin: 0 auto var(--sp-5);
+  margin: var(--sp-2) auto var(--sp-4);
+  cursor: pointer;
+  border: none; padding: 0;
+  transition: background var(--t-fast), transform var(--t-fast);
 }
+.sheet-handle:hover { background: var(--fg-tertiary); transform: scaleX(1.15); }
+.sheet-close {
+  position: absolute;
+  top: var(--sp-4); right: var(--sp-4);
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  color: var(--fg-secondary);
+  font-size: 1.2rem; line-height: 1;
+  cursor: pointer;
+  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
+  z-index: 2;
+}
+.sheet-close:hover { color: var(--fg-primary); background: var(--bg-input); border-color: var(--border-strong); }
+.sheet-close:active { transform: scale(0.92); }
 .sheet-title {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 1.75rem;
-  letter-spacing: -0.02em;
-  margin: 0 0 var(--sp-3);
+  font-family: var(--font-serif); font-weight: 500;
+  font-size: 1.75rem; letter-spacing: -0.02em;
+  margin: 0 var(--sp-7) var(--sp-3) 0;
 }
 
 /* Chip */

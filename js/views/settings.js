@@ -29,7 +29,8 @@ export function openSettings() {
   const el = sheet();
   el.innerHTML = `
     <div class="sheet-inner" role="dialog" aria-label="Ajustes">
-      <div class="sheet-handle"></div>
+      <button class="sheet-handle" data-action="sheet-close" aria-label="Cerrar"></button>
+      <button class="sheet-close" data-action="sheet-close" aria-label="Cerrar ajustes" title="Cerrar">×</button>
       <h2 class="sheet-title">Tus ajustes</h2>
 
       <div class="settings-section">
@@ -81,7 +82,8 @@ function openAbout() {
   const el = sheet();
   el.innerHTML = `
     <div class="sheet-inner" role="dialog" aria-label="Sobre Jaikuaa">
-      <div class="sheet-handle"></div>
+      <button class="sheet-handle" data-action="sheet-close" aria-label="Cerrar"></button>
+      <button class="sheet-close" data-action="sheet-close" aria-label="Cerrar" title="Cerrar">×</button>
       <h2 class="sheet-title serif italic">Jaikuaa</h2>
       <p style="color:var(--fg-secondary); line-height:1.7">
         <span class="serif italic">Jaikuaa</span> significa <em>conozcamos</em> o <em>sabemos</em> en guaraní inclusivo. La forma <span class="serif italic">ja-</span> incluye a quien lee en la acción.

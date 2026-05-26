@@ -95,13 +95,17 @@ function showFatal(msg) {
 }
 
 // ---- Routes ----
+function closeSheetIfOpen() {
+  const el = document.getElementById('sheet');
+  if (el && !el.hidden) closeSettings();
+}
 function defineRoutes() {
-  defineRoute('', (ctx) => { highlightNav(''); renderCard(ctx); });
-  defineRoute('card', (ctx) => { highlightNav(''); renderCard(ctx); });
-  defineRoute('search', () => { highlightNav('search'); renderSearch(); });
-  defineRoute('favorites', () => { highlightNav('favorites'); renderFavorites(); });
-  defineRoute('map', () => { highlightNav('map'); renderMap(); });
-  defineRoute('settings', () => { highlightNav('settings'); /* keep prior view visible */ openSettings(); });
+  defineRoute('',          (ctx) => { closeSheetIfOpen(); highlightNav(''); renderCard(ctx); });
+  defineRoute('card',      (ctx) => { closeSheetIfOpen(); highlightNav(''); renderCard(ctx); });
+  defineRoute('search',    ()    => { closeSheetIfOpen(); highlightNav('search'); renderSearch(); });
+  defineRoute('favorites', ()    => { closeSheetIfOpen(); highlightNav('favorites'); renderFavorites(); });
+  defineRoute('map',       ()    => { closeSheetIfOpen(); highlightNav('map'); renderMap(); });
+  defineRoute('settings',  ()    => { highlightNav('settings'); openSettings(); });
 }
 
 function highlightNav(active) {
