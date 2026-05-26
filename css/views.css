@@ -37,9 +37,9 @@
   animation: cardIn var(--t-base) var(--easing) forwards;
 }
 /* Carta coleccionable: pattern + emblema + sello + catálogo */
-.card-pattern { position: absolute; inset: 0; pointer-events: none; z-index: 0; border-radius: 22px; overflow: hidden; background-image: radial-gradient(circle, var(--cat-color, transparent) 1px, transparent 1.3px); background-size: 17px 17px; opacity: 0.16; mask-image: linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent); }
-.card-holo { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: 22px; opacity: 0; mix-blend-mode: color-dodge; background: linear-gradient(115deg, transparent 0%, transparent 35%, rgba(255,80,120,0.32) 42%, rgba(255,200,60,0.38) 47%, rgba(80,255,160,0.38) 52%, rgba(60,170,255,0.38) 57%, rgba(200,100,255,0.32) 62%, transparent 70%, transparent 100%); background-size: 280% 280%; transition: opacity var(--t-slow); }
-.card.is-tier-a .card-holo { opacity: 0.55; animation: holoShift 7s ease-in-out infinite; }
+.card-pattern { position: absolute; inset: 0; pointer-events: none; z-index: 0; border-radius: 22px; overflow: hidden; background-image: radial-gradient(circle, var(--cat-color, transparent) 1.1px, transparent 1.4px); background-size: 15px 15px; opacity: 0.22; mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent); }
+.card-holo { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: 22px; opacity: 0.28; mix-blend-mode: color-dodge; background: linear-gradient(115deg, transparent 0%, transparent 35%, rgba(255,80,120,0.32) 42%, rgba(255,200,60,0.38) 47%, rgba(80,255,160,0.38) 52%, rgba(60,170,255,0.38) 57%, rgba(200,100,255,0.32) 62%, transparent 70%, transparent 100%); background-size: 280% 280%; animation: holoShift 7s ease-in-out infinite; transition: opacity var(--t-slow); }
+.card.is-tier-a .card-holo { opacity: 0.6; }
 @keyframes holoShift { 0%,100% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } }
 .card-emblem { display: none; }
 .card-seal { position: absolute; top: 14px; right: 18px; z-index: 3; width: 32px; height: 32px; display: grid; place-items: center; color: var(--accent-yellow); font-size: 0.95rem; line-height: 1; background: color-mix(in srgb, var(--accent-yellow) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent-yellow) 45%, transparent); border-radius: 50%; text-shadow: 0 0 12px var(--accent-yellow); }
@@ -92,7 +92,7 @@
   line-height: 1.7; color: var(--fg-primary);
   max-width: 60ch; margin: var(--sp-3) 0 0;
 }
-.card-body.has-dropcap::first-letter { font-family: var(--font-serif); font-weight: 500; font-style: italic; font-size: 3.6em; line-height: 0.85; float: left; margin: 4px 8px -4px 0; color: var(--cat-color, var(--fg-primary)); }
+.card-body.has-dropcap::first-letter { /* drop cap removido — quedaba feo */ }
 
 .card-related {
   display: flex; flex-direction: column; gap: var(--sp-2);
