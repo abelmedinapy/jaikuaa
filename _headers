@@ -1,0 +1,14 @@
+# Cloudflare Pages: cache rules
+# HTML y SW nunca se cachean en CDN; el cliente siempre recibe la última.
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+/service-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/manifest.json
+  Cache-Control: no-cache
+
+# Data.json: corto cache en CDN (5 min) para que cambios lleguen rápido
+/data/data.json
+  Cache-Control: public, max-age=300, must-revalidate

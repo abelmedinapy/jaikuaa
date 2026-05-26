@@ -21,29 +21,29 @@
   <link rel="stylesheet" href="css/views.css">
 
   <script>
-  // Kill-switch: si el SW activo es anterior a v1.5, lo desregistra,
-  // borra todos los caches y recarga. Solo dispara una vez por sesión
-  // para evitar loops. El SW v1.5.2+ responde al mensaje VERSION;
-  // si no responde en 1.5s, se asume viejo.
+  // Kill-switch: el HTML lleva la versión exacta esperada del SW.
+  // Si el SW activo NO matchea, se desregistra, se borran todos los
+  // caches y se recarga. Como el HTML es no-cache en Cloudflare, este
+  // chequeo siempre usa el valor más reciente del deploy.
   (function () {
+    var EXPECTED = 'jaikuaa-v1.7.1';
     if (!('serviceWorker' in navigator)) return;
     navigator.serviceWorker.getRegistration().then(function (reg) {
       if (!reg || !reg.active) return;
-      if (sessionStorage.getItem('jk_nuked')) return;
+      if (sessionStorage.getItem('jk_nuked_' + EXPECTED)) return;
       var resolved = false;
       var ch = new MessageChannel();
       ch.port1.onmessage = function (e) {
         resolved = true;
         var v = (e.data && e.data.version) || '';
-        // Aceptar v1.5+ o cualquier v2+
-        if (!/^jaikuaa-v(1\.[5-9]|[2-9])/.test(v)) nuke(reg);
+        if (v !== EXPECTED) nuke(reg);
       };
       setTimeout(function () { if (!resolved) nuke(reg); }, 1500);
       try { reg.active.postMessage({ type: 'VERSION' }, [ch.port2]); }
       catch (_) { nuke(reg); }
     });
     function nuke(reg) {
-      sessionStorage.setItem('jk_nuked', '1');
+      sessionStorage.setItem('jk_nuked_' + 'jaikuaa-v1.7.1', '1');
       Promise.all([
         reg.unregister(),
         caches.keys().then(function (ks) {
