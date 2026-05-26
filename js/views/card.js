@@ -41,6 +41,8 @@ function renderCardHTML(entry) {
   return `
     <article class="card${entry.tier === 'A' ? ' is-tier-a' : ''}" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
       <span class="card-pattern" aria-hidden="true"></span>
+      <span class="card-shimmer" aria-hidden="true"></span>
+      <button class="card-tab" data-action="filter-by-cat" data-cat="${cat}" title="Filtrar por ${escapeHtml(CATEGORY_LABEL[cat] || cat)}">${escapeHtml(CATEGORY_LABEL[cat] || cat)}</button>
       ${tierHtml}
 
       <div class="card-hero">
@@ -54,8 +56,7 @@ function renderCardHTML(entry) {
       <footer class="card-footer">
         <div class="card-meta">
           <span class="card-cat-dot" aria-hidden="true"></span>
-          <span class="card-cat-link" data-action="filter-by-cat" data-cat="${cat}">${escapeHtml(CATEGORY_LABEL[cat] || cat)}</span>
-          ${subLabel ? `<span class="sep">·</span><span>${escapeHtml(subLabel)}</span>` : ''}
+          ${subLabel ? `<span>${escapeHtml(subLabel)}</span>` : ''}
           <span class="card-catalog">${escapeHtml(catalog)}</span>
         </div>
 
