@@ -48,7 +48,7 @@
 .card-tab:hover { transform: translateY(2px); filter: brightness(1.1); }
 .card-tab:active { transform: translateY(3px); }
 .card-shimmer { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: 22px; overflow: hidden; }
-.card-shimmer::after { content: ""; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(115deg, transparent 0%, transparent 40%, rgba(255,255,255,0.16) 50%, transparent 60%, transparent 100%); animation: shimmerPass 1100ms var(--easing) 220ms forwards; }
+.card-shimmer::after { content: ""; position: absolute; top: 0; left: -100%; width: 80%; height: 100%; background: linear-gradient(115deg, transparent 0%, transparent 38%, rgba(255,255,255,0.07) 50%, transparent 62%, transparent 100%); animation: shimmerPass 1600ms var(--easing) 280ms forwards; }
 @keyframes shimmerPass { to { left: 140%; } }
 
 /* Carta coleccionable: pattern + emblema + sello + catálogo */
