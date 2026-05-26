@@ -100,7 +100,7 @@ function mountStage(html) {
     : '';
   root.innerHTML = `
     <div class="card-stage">
-      ${html}
+      <div class="card-wrap">${html}</div>
       ${countLine}
       <div class="discover-row">
         ${prevBtn}
