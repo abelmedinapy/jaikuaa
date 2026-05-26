@@ -1,5 +1,6 @@
-// Gravedad sobre la card: el pattern de dots se desplaza y la card
-// entera se inclina sutilmente en 3D según el movimiento del celu.
+// Tilt fluido: requestAnimationFrame + LERP. Los eventos de orientation
+// y mouse solo actualizan targets; un loop independiente interpola
+// suavemente entre los valores actuales y los targets a 60fps.
 
 let tiltConnected = false;
 export function isTiltActive() { return tiltConnected; }
@@ -18,47 +19,51 @@ export async function requestTiltPermission() {
   return 'granted';
 }
 
-let _hookOrientation = null;
-function hookOrientation() { if (_hookOrientation) _hookOrientation(); }
+let _hook = null;
+function hookOrientation() { if (_hook) _hook(); }
 
 export function bindHoloTilt() {
-  const apply = (px, py, rx, ry) => {
-    const r = document.documentElement.style;
-    r.setProperty('--px', px.toFixed(1) + 'px');
-    r.setProperty('--py', py.toFixed(1) + 'px');
-    r.setProperty('--tilt-x', rx.toFixed(2) + 'deg');
-    r.setProperty('--tilt-y', ry.toFixed(2) + 'deg');
-  };
+  let tPx = 0, tPy = 0, tRx = 0, tRy = 0;        // targets
+  let cPx = 0, cPy = 0, cRx = 0, cRy = 0;        // current (interpolated)
+  let autoActive = true, t = 0;
+  const LERP = 0.12;
+  const r = document.documentElement.style;
 
-  // Animación auto sutil cuando no hay tilt (micro balanceo).
-  let t = 0, autoActive = true;
-  const autoTick = () => {
-    if (!autoActive) return;
-    t += 0.008;
-    apply(Math.sin(t) * 12, Math.sin(t * 1.3) * 9, Math.sin(t * 1.1) * 1.2, Math.sin(t) * 1.8);
-    requestAnimationFrame(autoTick);
+  const tick = () => {
+    if (autoActive) {
+      t += 0.012;
+      tPx = Math.sin(t) * 14;
+      tPy = Math.sin(t * 1.3) * 10;
+      tRx = Math.sin(t * 1.1) * 1.5;
+      tRy = Math.sin(t) * 2;
+    }
+    cPx += (tPx - cPx) * LERP;
+    cPy += (tPy - cPy) * LERP;
+    cRx += (tRx - cRx) * LERP;
+    cRy += (tRy - cRy) * LERP;
+    r.setProperty('--px', cPx.toFixed(2) + 'px');
+    r.setProperty('--py', cPy.toFixed(2) + 'px');
+    r.setProperty('--tilt-x', cRx.toFixed(3) + 'deg');
+    r.setProperty('--tilt-y', cRy.toFixed(3) + 'deg');
+    requestAnimationFrame(tick);
   };
-  requestAnimationFrame(autoTick);
+  requestAnimationFrame(tick);
 
-  _hookOrientation = () => {
+  _hook = () => {
     if (tiltConnected || !window.DeviceOrientationEvent) return;
     tiltConnected = true;
     window.addEventListener('deviceorientation', (e) => {
       if (e.gamma == null) return;
       autoActive = false;
-      const px = Math.max(-40, Math.min(40, -e.gamma * 1.1));
-      const py = Math.max(-32, Math.min(32, -(e.beta - 45) * 0.8));
-      const ry = Math.max(-8, Math.min(8, e.gamma * 0.22));
-      const rx = Math.max(-8, Math.min(8, -(e.beta - 45) * 0.16));
-      apply(px, py, rx, ry);
+      tPx = Math.max(-40, Math.min(40, -e.gamma * 1.1));
+      tPy = Math.max(-32, Math.min(32, -(e.beta - 45) * 0.8));
+      tRy = Math.max(-8, Math.min(8, e.gamma * 0.22));
+      tRx = Math.max(-8, Math.min(8, -(e.beta - 45) * 0.16));
     });
   };
-
-  // En Android (sin requestPermission) conectamos directo.
   const DOE = window.DeviceOrientationEvent;
-  if (DOE && typeof DOE.requestPermission !== 'function') _hookOrientation();
+  if (DOE && typeof DOE.requestPermission !== 'function') _hook();
 
-  // Desktop: mousemove
   document.addEventListener('mousemove', (e) => {
     const card = e.target && e.target.closest && e.target.closest('.card');
     if (!card) return;
@@ -66,6 +71,7 @@ export function bindHoloTilt() {
     const r = card.getBoundingClientRect();
     const nx = (e.clientX - r.left) / r.width - 0.5;
     const ny = (e.clientY - r.top) / r.height - 0.5;
-    apply(-nx * 40, -ny * 32, ny * 8, -nx * 8);
+    tPx = -nx * 40; tPy = -ny * 32;
+    tRx = ny * 8; tRy = -nx * 8;
   });
 }
