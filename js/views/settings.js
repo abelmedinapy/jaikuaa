@@ -70,7 +70,7 @@ export async function openSettings() {
 
       <div class="settings-section">
         <button class="btn is-block" data-action="settings-daily">Tarjeta del día</button>
-        ${isTiltActive() ? '' : `<button class="btn is-block" data-action="settings-tilt" style="margin-top:var(--sp-3)">Activar movimiento del celular</button>`}
+        <button class="btn is-block" data-action="settings-tilt" style="margin-top:var(--sp-3)">${isTiltActive() ? 'Movimiento del celular ✓' : 'Activar movimiento del celular'}</button>
         ${installPrompt ? `<button class="btn is-block" data-action="settings-install" style="margin-top:var(--sp-3)">Instalar como app</button>` : ''}
         <button class="btn is-block" data-action="settings-about" style="margin-top:var(--sp-3)">Sobre Jaikuaa</button>
         <button class="btn is-block is-danger" data-action="settings-clear-favs" style="margin-top:var(--sp-3)">Borrar mis favoritos</button>
