@@ -29,7 +29,6 @@ function renderCardHTML(entry) {
   const color = CATEGORY_COLOR[cat] || 'var(--fg-tertiary)';
   const isGuarani = cat === 'idioma';
   const fav = isFav(entry.id);
-  const initial = (entry.title || '·').trim()[0];
   const yearHtml = entry.year ? `<span class="card-title-year">${entry.year}</span>` : '';
   const subtitleHtml = entry.subtitle ? `<p class="card-subtitle">${escapeHtml(entry.subtitle)}</p>` : '';
   const bodyHtml = entry.body
@@ -42,8 +41,7 @@ function renderCardHTML(entry) {
   return `
     <article class="card${entry.tier === 'A' ? ' is-tier-a' : ''}" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
       <span class="card-pattern" aria-hidden="true"></span>
-      <span class="card-holo" aria-hidden="true"></span>
-      <span class="card-emblem" aria-hidden="true">${escapeHtml(initial)}</span>
+      <span class="card-shine" aria-hidden="true"></span>
       ${tierHtml}
 
       <div class="card-hero">

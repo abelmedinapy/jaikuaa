@@ -38,9 +38,11 @@
 }
 /* Carta coleccionable: pattern + emblema + sello + catálogo */
 .card-pattern { position: absolute; inset: 0; pointer-events: none; z-index: 0; border-radius: 22px; overflow: hidden; background-image: radial-gradient(circle, var(--cat-color, transparent) 1.1px, transparent 1.4px); background-size: 15px 15px; opacity: 0.22; mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent); }
-.card-holo { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: 22px; opacity: 0.28; mix-blend-mode: color-dodge; background: linear-gradient(115deg, transparent 0%, transparent 35%, rgba(255,80,120,0.32) 42%, rgba(255,200,60,0.38) 47%, rgba(80,255,160,0.38) 52%, rgba(60,170,255,0.38) 57%, rgba(200,100,255,0.32) 62%, transparent 70%, transparent 100%); background-size: 280% 280%; animation: holoShift 7s ease-in-out infinite; transition: opacity var(--t-slow); }
-.card.is-tier-a .card-holo { opacity: 0.6; }
-@keyframes holoShift { 0%,100% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } }
+/* Luz de gravedad: ilumina la zona del pattern hacia donde 'cae' el celu */
+.card-shine { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: 22px; overflow: hidden; mix-blend-mode: screen; opacity: 0.9; }
+.card-shine::after { content: ""; position: absolute; left: var(--sx, 50%); top: var(--sy, 50%); width: 65%; height: 65%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--cat-color, var(--fg-primary)) 38%, transparent), transparent 70%); filter: blur(24px); transition: left 140ms linear, top 140ms linear; }
+.card.is-tier-a .card-shine { opacity: 1.1; }
+.card.is-tier-a .card-shine::after { background: radial-gradient(circle, color-mix(in srgb, var(--cat-color, var(--fg-primary)) 55%, transparent), transparent 70%); }
 .card-emblem { display: none; }
 .card-seal { position: absolute; top: 14px; right: 18px; z-index: 3; width: 32px; height: 32px; display: grid; place-items: center; color: var(--accent-yellow); font-size: 0.95rem; line-height: 1; background: color-mix(in srgb, var(--accent-yellow) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent-yellow) 45%, transparent); border-radius: 50%; text-shadow: 0 0 12px var(--accent-yellow); }
 .card-catalog { margin-left: auto; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; color: var(--cat-color, var(--fg-tertiary)); padding: 3px 9px; border: 1px solid color-mix(in srgb, var(--cat-color, var(--border-subtle)) 40%, var(--border-subtle)); border-radius: 4px; background: color-mix(in srgb, var(--cat-color, transparent) 6%, transparent); }
