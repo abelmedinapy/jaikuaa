@@ -145,36 +145,24 @@
 }
 .sheet.open .sheet-inner { transform: none; }
 .sheet-handle {
-  width: 44px; height: 5px;
-  background: var(--border-strong);
-  border-radius: 999px;
+  width: 44px; height: 5px; border: none; padding: 0; cursor: pointer;
+  background: var(--border-strong); border-radius: 999px;
   margin: var(--sp-2) auto var(--sp-4);
-  cursor: pointer;
-  border: none; padding: 0;
   transition: background var(--t-fast), transform var(--t-fast);
 }
 .sheet-handle:hover { background: var(--fg-tertiary); transform: scaleX(1.15); }
 .sheet-close {
-  position: absolute;
-  top: var(--sp-4); right: var(--sp-4);
+  position: absolute; top: var(--sp-4); right: var(--sp-4); z-index: 2;
   width: 36px; height: 36px;
   display: grid; place-items: center;
-  background: transparent;
-  border: 1px solid var(--border-subtle);
-  border-radius: 50%;
-  color: var(--fg-secondary);
+  background: transparent; border: 1px solid var(--border-subtle);
+  border-radius: 50%; color: var(--fg-secondary); cursor: pointer;
   font-size: 1.2rem; line-height: 1;
-  cursor: pointer;
   transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
-  z-index: 2;
 }
 .sheet-close:hover { color: var(--fg-primary); background: var(--bg-input); border-color: var(--border-strong); }
 .sheet-close:active { transform: scale(0.92); }
-.sheet-title {
-  font-family: var(--font-serif); font-weight: 500;
-  font-size: 1.75rem; letter-spacing: -0.02em;
-  margin: 0 var(--sp-7) var(--sp-3) 0;
-}
+.sheet-title { font-family: var(--font-serif); font-weight: 500; font-size: 1.75rem; letter-spacing: -0.02em; margin: 0 var(--sp-7) var(--sp-3) 0; }
 
 /* Chip */
 .chip {

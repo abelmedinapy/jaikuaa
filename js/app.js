@@ -95,10 +95,7 @@ function showFatal(msg) {
 }
 
 // ---- Routes ----
-function closeSheetIfOpen() {
-  const el = document.getElementById('sheet');
-  if (el && !el.hidden) closeSettings();
-}
+function closeSheetIfOpen() { const el = document.getElementById('sheet'); if (el && !el.hidden) closeSettings(); }
 function defineRoutes() {
   defineRoute('',          (ctx) => { closeSheetIfOpen(); highlightNav(''); renderCard(ctx); });
   defineRoute('card',      (ctx) => { closeSheetIfOpen(); highlightNav(''); renderCard(ctx); });
