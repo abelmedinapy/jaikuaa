@@ -269,8 +269,7 @@
 .settings-row .label { color: var(--fg-primary); font-size: 0.95rem; font-weight: 500; }
 .settings-row .hint { color: var(--fg-tertiary); font-size: 0.8rem; margin-top: 4px; line-height: 1.4; }
 .toggle {
-  position: relative; flex-shrink: 0;
-  width: 44px; height: 26px;
+  position: relative; flex-shrink: 0; width: 44px; height: 26px;
   background: var(--bg-input); border-radius: 999px;
   border: 1px solid var(--border-subtle); cursor: pointer;
   transition: background var(--t-fast), border-color var(--t-fast);
