@@ -120,10 +120,8 @@
 
 /* Sheet — respeta el bottom nav, no lo cubre */
 .sheet {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  bottom: calc(var(--nav-h) + var(--safe-bottom));
-  z-index: 150;
+  position: fixed; top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + var(--safe-bottom)); z-index: 150;
   display: flex; align-items: flex-end;
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
