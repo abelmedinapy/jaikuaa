@@ -33,6 +33,7 @@ async function boot() {
   bindServiceWorker();
   bindInstallPrompt();
   bindOnlineStatus();
+  bindHoloTilt();
 
   try {
     await loadData();
@@ -281,6 +282,41 @@ function bindInstallPrompt() {
   window.addEventListener('appinstalled', () => {
     setState({ installPrompt: null });
     showToast('Bienvenido a Jaikuaa ★');
+  });
+}
+
+// ---- Holographic tilt (Tier A) ----
+function bindHoloTilt() {
+  let tiltOn = false;
+  const apply = (xPct, yPct) => {
+    const card = document.querySelector('.card.is-tier-a .card-holo');
+    if (!card) return;
+    card.style.backgroundPosition = `${xPct}% ${yPct}%`;
+    card.style.animation = 'none';
+    document.documentElement.classList.add('tilt-on');
+  };
+  const tryOrientation = () => {
+    if (!window.DeviceOrientationEvent) return;
+    window.addEventListener('deviceorientation', (e) => {
+      if (e.gamma == null) return;
+      const x = Math.max(0, Math.min(100, 50 + e.gamma * 1.8));
+      const y = Math.max(0, Math.min(100, 50 + (e.beta - 45) * 1.4));
+      apply(x, y); tiltOn = true;
+    });
+  };
+  // iOS 13+ requires user gesture to request permission
+  document.addEventListener('touchstart', function once() {
+    document.removeEventListener('touchstart', once);
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then((r) => { if (r === 'granted') tryOrientation(); }).catch(() => {});
+    } else { tryOrientation(); }
+  }, { passive: true });
+  // Desktop mouse fallback
+  document.addEventListener('mousemove', (e) => {
+    const card = e.target.closest && e.target.closest('.card.is-tier-a');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    apply(((e.clientX - r.left) / r.width) * 100, ((e.clientY - r.top) / r.height) * 100);
   });
 }
 
