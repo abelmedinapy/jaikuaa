@@ -29,16 +29,22 @@ function renderCardHTML(entry) {
   const color = CATEGORY_COLOR[cat] || 'var(--fg-tertiary)';
   const isGuarani = cat === 'idioma';
   const fav = isFav(entry.id);
+  const initial = (entry.title || '·').trim()[0];
   const yearHtml = entry.year ? `<span class="card-title-year">${entry.year}</span>` : '';
   const subtitleHtml = entry.subtitle ? `<p class="card-subtitle">${escapeHtml(entry.subtitle)}</p>` : '';
   const bodyHtml = entry.body
     ? `<p class="card-body${entry.body.length > 120 ? ' has-dropcap' : ''}">${escapeHtml(entry.body)}</p>`
     : '';
-  const tierHtml = entry.tier === 'A' ? `<span class="card-tier-badge" title="Destacado" aria-label="Destacado">★</span>` : '';
+  const tierHtml = entry.tier === 'A' ? `<span class="card-seal" title="Destacado" aria-label="Destacado">★</span>` : '';
   const subLabel = entry.subcategory_label || entry.subcategory || '';
+  const catalog = entry.id.toUpperCase().replace('-', ' · ');
 
   return `
     <article class="card" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
+      <span class="card-pattern" aria-hidden="true"></span>
+      <span class="card-emblem" aria-hidden="true">${escapeHtml(initial)}</span>
+      ${tierHtml}
+
       <div class="card-hero">
         <h1 class="card-title ${isGuarani ? 'is-guarani' : ''}">${escapeHtml(entry.title)}${yearHtml}</h1>
         ${subtitleHtml}
@@ -52,7 +58,7 @@ function renderCardHTML(entry) {
           <span class="card-cat-dot" aria-hidden="true"></span>
           <span class="card-cat-link" data-action="filter-by-cat" data-cat="${cat}">${escapeHtml(CATEGORY_LABEL[cat] || cat)}</span>
           ${subLabel ? `<span class="sep">·</span><span>${escapeHtml(subLabel)}</span>` : ''}
-          ${tierHtml}
+          <span class="card-catalog">${escapeHtml(catalog)}</span>
         </div>
 
         <div class="card-source-row">

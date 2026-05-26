@@ -1,5 +1,5 @@
 // Jaikuaa Service Worker — offline-first for app shell + dataset.
-const VERSION = 'jaikuaa-v1.8.0';
+const VERSION = 'jaikuaa-v1.8.1';
 const STATIC_CACHE = `${VERSION}-static`;
 const DATA_CACHE = `${VERSION}-data`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
