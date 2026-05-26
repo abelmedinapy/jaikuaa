@@ -39,11 +39,11 @@
 /* Deck: 2 cards fantasma apiladas detrás (sugieren más por descubrir) */
 .card::before, .card::after {
   content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: -1;
-  background: var(--bg-card); border: 1px solid var(--border-subtle);
-  border-radius: 22px; pointer-events: none;
+  background: var(--bg-card); border-radius: 22px; pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
-.card::before { transform: scale(0.95) translateY(20px); opacity: 0.75; }
-.card::after  { transform: scale(0.90) translateY(40px); opacity: 0.45; }
+.card::before { transform: scale(0.95) translateY(18px); opacity: 0.6; }
+.card::after  { transform: scale(0.90) translateY(36px); opacity: 0.35; }
 @keyframes cardIn { to { opacity: 1; transform: none; } }
 .card.leaving { animation: cardOut var(--t-fast) var(--easing) forwards; }
 .card.leaving.leave-up   { animation: cardOutUp 220ms var(--easing) forwards; }
