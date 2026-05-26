@@ -1,6 +1,26 @@
 // Gravedad sobre la card: el pattern de dots se desplaza y la card
 // entera se inclina sutilmente en 3D según el movimiento del celu.
-// Sin manchas, sin luces — solo respuesta física al device tilt.
+
+let tiltConnected = false;
+export function isTiltActive() { return tiltConnected; }
+
+export async function requestTiltPermission() {
+  const DOE = window.DeviceOrientationEvent;
+  if (!DOE) return 'unsupported';
+  if (typeof DOE.requestPermission === 'function') {
+    try {
+      const r = await DOE.requestPermission();
+      if (r === 'granted') { hookOrientation(); return 'granted'; }
+      return 'denied';
+    } catch { return 'denied'; }
+  }
+  hookOrientation();
+  return 'granted';
+}
+
+let _hookOrientation = null;
+function hookOrientation() { if (_hookOrientation) _hookOrientation(); }
+
 export function bindHoloTilt() {
   const apply = (px, py, rx, ry) => {
     const r = document.documentElement.style;
@@ -20,30 +40,23 @@ export function bindHoloTilt() {
   };
   requestAnimationFrame(autoTick);
 
-  const tryOrientation = () => {
-    if (!window.DeviceOrientationEvent) return;
+  _hookOrientation = () => {
+    if (tiltConnected || !window.DeviceOrientationEvent) return;
+    tiltConnected = true;
     window.addEventListener('deviceorientation', (e) => {
       if (e.gamma == null) return;
       autoActive = false;
       const px = Math.max(-40, Math.min(40, -e.gamma * 1.1));
       const py = Math.max(-32, Math.min(32, -(e.beta - 45) * 0.8));
-      // Tilt 3D de la card: gamma → rotateY, beta → rotateX
       const ry = Math.max(-8, Math.min(8, e.gamma * 0.22));
       const rx = Math.max(-8, Math.min(8, -(e.beta - 45) * 0.16));
       apply(px, py, rx, ry);
     });
   };
 
-  // iOS 13+ permission gate
-  document.addEventListener('touchstart', function once() {
-    document.removeEventListener('touchstart', once);
-    const DOE = window.DeviceOrientationEvent;
-    if (DOE && typeof DOE.requestPermission === 'function') {
-      DOE.requestPermission().then((r) => { if (r === 'granted') tryOrientation(); }).catch(() => {});
-    } else {
-      tryOrientation();
-    }
-  }, { passive: true });
+  // En Android (sin requestPermission) conectamos directo.
+  const DOE = window.DeviceOrientationEvent;
+  if (DOE && typeof DOE.requestPermission !== 'function') _hookOrientation();
 
   // Desktop: mousemove
   document.addEventListener('mousemove', (e) => {

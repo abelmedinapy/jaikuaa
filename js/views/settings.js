@@ -2,6 +2,7 @@ import { CATEGORY_COLOR, CATEGORY_LABEL, meta, dailyItem, allItems } from '../da
 import { clearFavs, clearFilters, getState, setFilters } from '../store.js';
 import { navigate } from '../router.js';
 import { showToast } from '../app.js';
+import { requestTiltPermission, isTiltActive } from '../utils/holo-tilt.js';
 
 const sheet = () => document.getElementById('sheet');
 
@@ -69,6 +70,7 @@ export async function openSettings() {
 
       <div class="settings-section">
         <button class="btn is-block" data-action="settings-daily">Tarjeta del día</button>
+        ${isTiltActive() ? '' : `<button class="btn is-block" data-action="settings-tilt" style="margin-top:var(--sp-3)">Activar movimiento del celular</button>`}
         ${installPrompt ? `<button class="btn is-block" data-action="settings-install" style="margin-top:var(--sp-3)">Instalar como app</button>` : ''}
         <button class="btn is-block" data-action="settings-about" style="margin-top:var(--sp-3)">Sobre Jaikuaa</button>
         <button class="btn is-block is-danger" data-action="settings-clear-favs" style="margin-top:var(--sp-3)">Borrar mis favoritos</button>
@@ -129,6 +131,14 @@ export function handleSettingsAction(action, target) {
   if (action === 'settings-install')       {
     const p = getState().installPrompt;
     if (p && p.prompt) { p.prompt(); }
+    return true;
+  }
+  if (action === 'settings-tilt')          {
+    requestTiltPermission().then((r) => {
+      if (r === 'granted') { showToast('Movimiento activado ✓'); closeSettings(); }
+      else if (r === 'denied') showToast('Permiso rechazado');
+      else showToast('Este dispositivo no lo soporta');
+    });
     return true;
   }
   if (action === 'settings-about')         { openAbout(); return true; }
