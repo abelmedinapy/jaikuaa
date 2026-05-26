@@ -41,7 +41,6 @@ function renderCardHTML(entry) {
   return `
     <article class="card${entry.tier === 'A' ? ' is-tier-a' : ''}" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
       <span class="card-pattern" aria-hidden="true"></span>
-      <span class="card-shine" aria-hidden="true"></span>
       ${tierHtml}
 
       <div class="card-hero">

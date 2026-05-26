@@ -1,21 +1,19 @@
-// Luz de gravedad: la zona "iluminada" del pattern se mueve siguiendo
-// la inclinación del celular (deviceorientation) o el cursor (desktop).
-// La metáfora: una linterna apoyada sobre la card que se desliza hacia
-// donde "cae" el celular.
+// Gravedad sobre el pattern de dots: cuando inclinás el celu,
+// el pattern entero se desplaza unos píxeles como si los puntos
+// se balancearan por gravedad. Sin manchas, sin luces, sin
+// gradients — solo desplazamiento sutil del pattern.
 export function bindHoloTilt() {
-  const apply = (xPct, yPct) => {
-    document.documentElement.style.setProperty('--sx', xPct + '%');
-    document.documentElement.style.setProperty('--sy', yPct + '%');
+  const apply = (px, py) => {
+    document.documentElement.style.setProperty('--px', px.toFixed(1) + 'px');
+    document.documentElement.style.setProperty('--py', py.toFixed(1) + 'px');
   };
 
-  // Animación suave si no hay tilt disponible (lemniscata lenta).
+  // Animación auto si no hay tilt: micro balanceo lento.
   let t = 0, autoActive = true;
   const autoTick = () => {
     if (!autoActive) return;
-    t += 0.01;
-    const x = 50 + Math.sin(t) * 22;
-    const y = 50 + Math.sin(t * 1.3) * 16;
-    apply(x, y);
+    t += 0.008;
+    apply(Math.sin(t) * 4, Math.sin(t * 1.3) * 3);
     requestAnimationFrame(autoTick);
   };
   requestAnimationFrame(autoTick);
@@ -25,16 +23,15 @@ export function bindHoloTilt() {
     window.addEventListener('deviceorientation', (e) => {
       if (e.gamma == null) return;
       autoActive = false;
-      // Gravedad inversa: si inclinás hacia la derecha (gamma>0), la
-      // luz "cae" a la izquierda. Si inclinás hacia adelante (beta<45),
-      // la luz cae hacia abajo.
-      const x = Math.max(5, Math.min(95, 50 - e.gamma * 1.6));
-      const y = Math.max(5, Math.min(95, 50 + (e.beta - 45) * 1.2));
-      apply(x, y);
+      // Inclinás derecha (gamma>0) → pattern se mueve a la izquierda
+      // Inclinás adelante (beta<45) → pattern se mueve hacia arriba
+      const px = Math.max(-12, Math.min(12, -e.gamma * 0.35));
+      const py = Math.max(-10, Math.min(10, -(e.beta - 45) * 0.25));
+      apply(px, py);
     });
   };
 
-  // iOS 13+ requires user gesture for DeviceOrientation permission.
+  // iOS 13+ permission gate
   document.addEventListener('touchstart', function once() {
     document.removeEventListener('touchstart', once);
     const DOE = window.DeviceOrientationEvent;
@@ -45,12 +42,14 @@ export function bindHoloTilt() {
     }
   }, { passive: true });
 
-  // Desktop: mouse mueve la luz dentro de la card hovered.
+  // Desktop: mousemove sobre cualquier card mueve el pattern
   document.addEventListener('mousemove', (e) => {
     const card = e.target && e.target.closest && e.target.closest('.card');
     if (!card) return;
     autoActive = false;
     const r = card.getBoundingClientRect();
-    apply(((e.clientX - r.left) / r.width) * 100, ((e.clientY - r.top) / r.height) * 100);
+    const nx = (e.clientX - r.left) / r.width - 0.5;
+    const ny = (e.clientY - r.top) / r.height - 0.5;
+    apply(-nx * 12, -ny * 10);
   });
 }
