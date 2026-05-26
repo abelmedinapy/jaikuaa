@@ -124,14 +124,11 @@
 
 /* Sheet */
 .sheet {
-  position: fixed; inset: 0;
-  z-index: 150;
+  position: fixed; inset: 0; z-index: 150;
   display: flex; align-items: flex-end;
   background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  opacity: 0;
-  transition: opacity var(--t-base) var(--easing);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; transition: opacity var(--t-base) var(--easing);
 }
 .sheet.open { opacity: 1; }
 .sheet[hidden] { display: none; }
