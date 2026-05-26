@@ -1,5 +1,5 @@
 // Jaikuaa Service Worker — offline-first for app shell + dataset.
-const VERSION = 'jaikuaa-v1.5.1';
+const VERSION = 'jaikuaa-v1.5.2';
 const STATIC_CACHE = `${VERSION}-static`;
 const DATA_CACHE = `${VERSION}-data`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
@@ -41,6 +41,13 @@ self.addEventListener('activate', (event) => {
       Promise.all(keys.filter((k) => !k.startsWith(VERSION)).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
+});
+
+// Responde al ping del kill-switch en index.html
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'VERSION' && event.ports && event.ports[0]) {
+    event.ports[0].postMessage({ version: VERSION });
+  }
 });
 
 self.addEventListener('fetch', (event) => {
