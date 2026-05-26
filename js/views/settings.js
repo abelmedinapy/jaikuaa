@@ -104,7 +104,7 @@ function openAbout() {
         <span class="serif italic">Jaikuaa</span> significa <em>conozcamos</em> o <em>sabemos</em> en guaraní inclusivo. La forma <span class="serif italic">ja-</span> incluye a quien lee en la acción.
       </p>
       <p style="color:var(--fg-secondary); line-height:1.7; margin-top:var(--sp-4)">
-        Una postal nocturna del Paraguay: 2940 tarjetas curadas sobre lugares, naturaleza, idioma, cultura, comida, personajes, historia, leyendas y vida cotidiana. No es Wikipedia. Es un <em>descubridor poético</em> para abrir cada día.
+        Una postal nocturna del Paraguay: 3763 tarjetas curadas sobre lugares, naturaleza, idioma, cultura, comida, personajes, historia, leyendas y vida cotidiana. No es Wikipedia. Es un <em>descubridor poético</em> para abrir cada día.
       </p>
       <p class="mono" style="color:var(--fg-tertiary); font-size:0.75rem; margin-top:var(--sp-5); line-height:1.6">
         Curaduría: AMPOST · Licencia CC BY-SA 4.0 · Diseñado en Asunción · 2026

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0A0A0F">
-  <meta name="description" content="Cultura paraguaya, una tarjeta a la vez. 2940 entries curados: lugares, naturaleza, idioma guaraní, cultura, comida, personajes, historia, leyendas y sociedad.">
+  <meta name="description" content="Cultura paraguaya, una tarjeta a la vez. 3763 entries curados: lugares, naturaleza, idioma guaraní, cultura, comida, personajes, historia, leyendas y sociedad.">
   <title>Jaikuaa — cultura paraguaya, una tarjeta a la vez</title>
 
   <link rel="manifest" href="manifest.json">
@@ -26,7 +26,7 @@
   // caches y se recarga. Como el HTML es no-cache en Cloudflare, este
   // chequeo siempre usa el valor más reciente del deploy.
   (function () {
-    var EXPECTED = 'jaikuaa-v1.11.3';
+    var EXPECTED = 'jaikuaa-v1.12.0';
     if (!('serviceWorker' in navigator)) return;
     navigator.serviceWorker.getRegistration().then(function (reg) {
       if (!reg || !reg.active) return;
@@ -43,7 +43,7 @@
       catch (_) { nuke(reg); }
     });
     function nuke(reg) {
-      sessionStorage.setItem('jk_nuked_' + 'jaikuaa-v1.11.3', '1');
+      sessionStorage.setItem('jk_nuked_' + 'jaikuaa-v1.12.0', '1');
       Promise.all([
         reg.unregister(),
         caches.keys().then(function (ks) {

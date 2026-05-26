@@ -89,7 +89,7 @@ function showFatal(msg) {
     <div class="fullscreen-msg">
       <h1>Algo salió mal</h1>
       <p>${msg}</p>
-      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez Jaikuaa necesita internet para bajar las 2.940 tarjetas. Después corre sin conexión, prometido.</p>
+      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez Jaikuaa necesita internet para bajar las 3.763 tarjetas. Después corre sin conexión, prometido.</p>
       <button class="btn" onclick="location.reload()">Probar de nuevo</button>
     </div>
   `;
