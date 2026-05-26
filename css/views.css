@@ -291,10 +291,8 @@
 
 /* ============ Generic ============ */
 .fullscreen-msg {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; flex: 1;
-  padding: var(--sp-7) var(--sp-5); gap: var(--sp-4);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; flex: 1; padding: var(--sp-7) var(--sp-5); gap: var(--sp-4);
 }
 .fullscreen-msg h1 { font-family: var(--font-serif); font-weight: 500; font-size: 2.25rem; letter-spacing: -0.02em; }
 .fullscreen-msg p { color: var(--fg-secondary); max-width: 40ch; line-height: 1.7; }
