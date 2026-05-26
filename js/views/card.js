@@ -40,8 +40,9 @@ function renderCardHTML(entry) {
   const catalog = entry.id.toUpperCase().replace('-', ' · ');
 
   return `
-    <article class="card" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
+    <article class="card${entry.tier === 'A' ? ' is-tier-a' : ''}" data-id="${entry.id}" style="--cat-color:${color};" data-action="next-card">
       <span class="card-pattern" aria-hidden="true"></span>
+      <span class="card-holo" aria-hidden="true"></span>
       <span class="card-emblem" aria-hidden="true">${escapeHtml(initial)}</span>
       ${tierHtml}
 
