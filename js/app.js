@@ -234,10 +234,13 @@ function bindServiceWorker() {
 
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('service-worker.js');
-      // Check periódico cada 5 min mientras la pestaña está abierta
+      // Purgar SW registrado en path viejo (/service-worker.js) si existe.
+      const all = await navigator.serviceWorker.getRegistrations();
+      for (const r of all) {
+        if (r.active && r.active.scriptURL.endsWith('/service-worker.js')) await r.unregister();
+      }
+      const reg = await navigator.serviceWorker.register('sw.js');
       setInterval(() => reg.update().catch(() => {}), 5 * 60 * 1000);
-      // Check al volver a la pestaña
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden) reg.update().catch(() => {});
       });
