@@ -85,10 +85,10 @@ function showFatal(msg) {
   const root = document.getElementById('view');
   root.innerHTML = `
     <div class="fullscreen-msg">
-      <h1>No pudimos cargar Jaikuaa</h1>
+      <h1>Algo salió mal</h1>
       <p>${msg}</p>
-      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez se necesita conexión para descargar las 2940 tarjetas. Después funciona sin internet.</p>
-      <button class="btn" onclick="location.reload()">Reintentar</button>
+      <p style="color:var(--fg-tertiary); font-size:0.85rem">La primera vez Jaikuaa necesita internet para bajar las 2.940 tarjetas. Después corre sin conexión, prometido.</p>
+      <button class="btn" onclick="location.reload()">Probar de nuevo</button>
     </div>
   `;
   hideSplash();
@@ -170,21 +170,21 @@ function bindGlobalListeners() {
       target.innerHTML = now
         ? '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .7-4.5 4.2 1.2 6L12 16.8 6.7 19.4l1.2-6L3.4 9.2l6-.7L12 3z"/></svg>'
         : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .7-4.5 4.2 1.2 6L12 16.8 6.7 19.4l1.2-6L3.4 9.2l6-.7L12 3z"/></svg>';
-      showToast(now ? 'Agregado a favoritos' : 'Quitado de favoritos');
+      showToast(now ? 'Guardada en favoritos ★' : 'Sacada de favoritos');
       return;
     }
 
     if (action === 'share') {
       const entry = getCurrentEntry();
       if (!entry) return;
-      showToast('Generando imagen…');
+      showToast('Armando la imagen…');
       try {
         const res = await shareCard(entry);
         if (res === 'shared') showToast('Compartido');
-        else if (res === 'link-and-png') showToast('Enlace copiado · PNG descargado');
-        else if (res === 'downloaded') showToast('PNG descargado');
+        else if (res === 'link-and-png') showToast('Enlace copiado · PNG en descargas');
+        else if (res === 'downloaded') showToast('PNG en descargas');
       } catch (err) {
-        showToast('No se pudo compartir');
+        showToast('No se pudo compartir — perdón');
         console.error(err);
       }
       return;
@@ -260,7 +260,7 @@ function bindServiceWorker() {
 function showUpdateAvailable() {
   const t = document.getElementById('toast');
   if (!t) { location.reload(); return; }
-  t.innerHTML = `Nueva versión disponible <button class="toast-action" type="button">actualizar</button>`;
+  t.innerHTML = `Hay una versión nueva <button class="toast-action" type="button">actualizar</button>`;
   t.classList.add('show');
   let applied = false;
   const apply = () => { if (applied) return; applied = true; location.reload(); };
@@ -277,7 +277,7 @@ function bindInstallPrompt() {
   });
   window.addEventListener('appinstalled', () => {
     setState({ installPrompt: null });
-    showToast('Jaikuaa instalada');
+    showToast('Bienvenido a Jaikuaa ★');
   });
 }
 

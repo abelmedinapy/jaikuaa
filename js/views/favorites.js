@@ -36,8 +36,8 @@ export function renderRoute() {
       <div class="fav-wrap">
         <h2 class="fav-title">Favoritos</h2>
         <div class="empty">
-          <div class="empty-title">Aún sin favoritos</div>
-          <p>Marcá tarjetas con ★ desde el detalle para guardarlas acá.</p>
+          <div class="empty-title">tu cajón está vacío</div>
+          <p>Tocá dos veces una tarjeta o usá el ★ del costado para guardarla acá. Lo que te guste, no se pierde.</p>
         </div>
       </div>
     `;

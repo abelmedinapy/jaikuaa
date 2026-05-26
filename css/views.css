@@ -25,15 +25,10 @@
 .discover-btn svg { width: 16px; height: 16px; opacity: 0.85; }
 .card {
   width: 100%; max-width: 620px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 18px;
+  background: radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.025), transparent 60%), linear-gradient(180deg, var(--bg-card) 0%, #131119 100%);
+  border: 1px solid var(--border-subtle); border-radius: 22px;
   padding: clamp(1.75rem, 5vw, 3rem);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.04) inset,
-    0 2px 4px rgba(0,0,0,0.4),
-    0 16px 48px rgba(0,0,0,0.5),
-    0 32px 96px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 2px 4px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.5), 0 32px 96px rgba(0,0,0,0.3), 0 0 60px -8px color-mix(in srgb, var(--cat-color, transparent) 22%, transparent);
   display: flex; flex-direction: column; gap: var(--sp-7);
   cursor: pointer; position: relative;
   opacity: 0; transform: translateY(8px);
@@ -157,10 +152,11 @@
   gap: var(--sp-4);
 }
 .card-source {
-  font-family: var(--font-mono); font-size: 0.7rem;
-  line-height: 1.55; color: var(--fg-tertiary);
-  letter-spacing: 0.02em; flex: 1; min-width: 0;
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 0.85rem; line-height: 1.5;
+  color: var(--fg-tertiary); flex: 1; min-width: 0;
 }
+.card-source::before { content: "— "; font-style: normal; margin-right: 2px; }
 .card-actions { display: flex; gap: 2px; flex-shrink: 0; }
 .card-actions button {
   width: 38px; height: 38px; border-radius: 8px;

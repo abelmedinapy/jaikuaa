@@ -46,11 +46,11 @@ function renderResults(query) {
   const results = search(query, filters);
   const count = results.length;
   const countEl = document.querySelector('.search-count');
-  if (countEl) countEl.textContent = query ? `${count} resultado${count === 1 ? '' : 's'} para "${query}"` : `${count} entr${count === 1 ? 'y' : 'ies'} disponibles`;
+  if (countEl) countEl.textContent = query ? `${count} ${count === 1 ? 'tarjeta encontrada' : 'tarjetas encontradas'}` : `${count.toLocaleString('es')} tarjetas para descubrir`;
   const listEl = document.querySelector('.search-list');
   if (!listEl) return;
   if (!count) {
-    listEl.innerHTML = `<div class="empty"><div class="empty-title">${query ? 'Sin resultados' : 'Probá una búsqueda'}</div><p>${query ? 'No encontramos nada con esa palabra. Probá otra.' : 'Buscá por nombre, palabra guaraní, lugar o tema.'}</p></div>`;
+    listEl.innerHTML = `<div class="empty"><div class="empty-title">${query ? 'nada con esa palabra' : 'todo el Paraguay esperando'}</div><p>${query ? 'Probá con otra. A veces conviene escribir solo una parte.' : 'Escribí algo arriba: un nombre, una palabra guaraní, un lugar, una idea.'}</p></div>`;
     return;
   }
   listEl.innerHTML = results.map(renderRow).join('');
@@ -61,7 +61,7 @@ export function renderRoute() {
   root.innerHTML = `
     <div class="search-wrap">
       <h2 class="search-title">Buscar</h2>
-      <input class="input" id="search-input" type="search" placeholder="Buscá una palabra, un lugar, una idea…" value="${escapeHtml(lastQuery)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" />
+      <input class="input" id="search-input" type="search" placeholder="una palabra guaraní, un lugar, una idea…" value="${escapeHtml(lastQuery)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" />
       <div class="search-chips" role="tablist" aria-label="Filtros de categoría">${renderChips()}</div>
       <div class="search-count mono"></div>
     </div>

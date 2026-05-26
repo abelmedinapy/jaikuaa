@@ -30,7 +30,7 @@ export function openSettings() {
   el.innerHTML = `
     <div class="sheet-inner" role="dialog" aria-label="Ajustes">
       <div class="sheet-handle"></div>
-      <h2 class="sheet-title">Ajustes</h2>
+      <h2 class="sheet-title">Tus ajustes</h2>
 
       <div class="settings-section">
         <div class="settings-row">
@@ -55,12 +55,12 @@ export function openSettings() {
 
       <div class="settings-section">
         <button class="btn is-block" data-action="settings-daily">Tarjeta del día</button>
-        ${installPrompt ? `<button class="btn is-block" data-action="settings-install" style="margin-top:var(--sp-3)">Instalar Jaikuaa</button>` : ''}
+        ${installPrompt ? `<button class="btn is-block" data-action="settings-install" style="margin-top:var(--sp-3)">Instalar como app</button>` : ''}
         <button class="btn is-block" data-action="settings-about" style="margin-top:var(--sp-3)">Sobre Jaikuaa</button>
-        <button class="btn is-block is-danger" data-action="settings-clear-favs" style="margin-top:var(--sp-3)">Limpiar favoritos</button>
+        <button class="btn is-block is-danger" data-action="settings-clear-favs" style="margin-top:var(--sp-3)">Borrar mis favoritos</button>
       </div>
 
-      <div class="settings-footer">v${m.version || '1.0.0'} · ${m.total || '?'} entries · Hecho con ❤︎ en Asunción</div>
+      <div class="settings-footer">v${m.version || '1.0.0'} · ${(m.total || 0).toLocaleString('es')} tarjetas · hecho con ❤︎ en Asunción</div>
     </div>
   `;
   el.hidden = false;
@@ -118,9 +118,9 @@ export function handleSettingsAction(action, target) {
   }
   if (action === 'settings-about')         { openAbout(); return true; }
   if (action === 'settings-clear-favs')    {
-    if (confirm('¿Borrar todos los favoritos? Esta acción no se puede deshacer.')) {
+    if (confirm('¿Seguro que querés borrar todos tus favoritos? No hay vuelta atrás.')) {
       clearFavs();
-      showToast('Favoritos eliminados');
+      showToast('Listo, cajón vacío');
       openSettings();
     }
     return true;

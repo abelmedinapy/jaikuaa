@@ -57,6 +57,7 @@
 <body>
   <div id="splash" class="splash" aria-hidden="false">
     <span class="splash-word">Jaikuaa</span>
+    <span class="splash-tagline">una postal del Paraguay</span>
   </div>
 
   <main id="view" class="view" aria-live="polite"></main>
@@ -64,18 +65,23 @@
   <nav id="nav" class="bottom-nav" aria-label="Navegación principal" hidden>
     <button class="nav-btn" data-action="route" data-route="favorites" aria-label="Favoritos">
       <span class="nav-ico" data-ico="star"></span>
+      <span class="nav-label">favoritos</span>
     </button>
-    <button class="nav-btn" data-action="route" data-route="" aria-label="Random">
+    <button class="nav-btn" data-action="route" data-route="" aria-label="Descubrir">
       <span class="nav-ico" data-ico="dice"></span>
+      <span class="nav-label">descubrir</span>
     </button>
     <button class="nav-btn" data-action="route" data-route="map" aria-label="Mapa">
       <span class="nav-ico" data-ico="map"></span>
+      <span class="nav-label">mapa</span>
     </button>
     <button class="nav-btn" data-action="route" data-route="search" aria-label="Buscar">
       <span class="nav-ico" data-ico="search"></span>
+      <span class="nav-label">buscar</span>
     </button>
     <button class="nav-btn" data-action="route" data-route="settings" aria-label="Ajustes">
       <span class="nav-ico" data-ico="gear"></span>
+      <span class="nav-label">ajustes</span>
     </button>
     <span class="nav-offline-dot" id="offline-dot" hidden aria-label="Sin conexión"></span>
   </nav>
@@ -85,7 +91,7 @@
 
   <div id="swipe-hint" class="swipe-hint" hidden aria-hidden="true">
     <span class="swipe-arrow up">↑</span>
-    <span class="swipe-hint-text">deslizá hacia arriba<br>o tocá para descubrir</span>
+    <span class="swipe-hint-text">deslizá hacia arriba<br>para seguir descubriendo</span>
   </div>
 
   <script type="module" src="js/app.js"></script>

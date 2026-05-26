@@ -18,7 +18,7 @@ function renderRelated(entry) {
   ).join('<span class="related-sep">·</span>');
   return `
     <div class="card-related">
-      <span class="related-label">relacionadas</span>
+      <span class="related-label">seguí el hilo</span>
       <div class="related-links">${links}</div>
     </div>
   `;
@@ -84,7 +84,7 @@ function mountStage(html) {
     ? `<button class="prev-btn" data-action="prev-card" aria-label="Tarjeta anterior" title="Anterior">←</button>`
     : `<span class="prev-btn-placeholder" aria-hidden="true"></span>`;
   const countLine = count > 0
-    ? `<div class="session-count" aria-label="Tarjetas descubiertas hoy">${count} ${count === 1 ? 'descubierta' : 'descubiertas'} hoy</div>`
+    ? `<div class="session-count" aria-label="Tarjetas descubiertas hoy">llevás ${count} ${count === 1 ? 'tarjeta' : 'tarjetas'} hoy</div>`
     : '';
   root.innerHTML = `
     <div class="card-stage">
@@ -92,8 +92,8 @@ function mountStage(html) {
       ${countLine}
       <div class="discover-row">
         ${prevBtn}
-        <button class="discover-btn" data-action="discover-next" aria-label="Otra tarjeta">
-          <span>Otra</span> ${ICONS.dice}
+        <button class="discover-btn" data-action="discover-next" aria-label="Mostrame otra tarjeta">
+          <span>Mostrame otra</span> ${ICONS.dice}
         </button>
       </div>
     </div>
@@ -222,7 +222,7 @@ export function setupCardInteractions(root) {
             favBtn.innerHTML = now ? ICONS.starFill : ICONS.star;
           }
           pulseFavOnCard();
-          showToast(isFav(currentEntry.id) ? 'Agregado a favoritos' : 'Quitado de favoritos');
+          showToast(isFav(currentEntry.id) ? 'Guardada en favoritos ★' : 'Sacada de favoritos');
         }
         lastTapT = 0;
       } else {
@@ -277,8 +277,8 @@ export async function copyCurrent() {
   ].filter(Boolean).join('\n');
   try {
     await navigator.clipboard.writeText(parts);
-    showToast('Copiado al portapapeles');
+    showToast('Copiado, listo para pegar');
   } catch {
-    showToast('No se pudo copiar');
+    showToast('No se pudo copiar — perdón');
   }
 }
