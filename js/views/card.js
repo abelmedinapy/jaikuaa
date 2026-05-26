@@ -110,12 +110,12 @@ export function showCard(entry, { recordHistory = true, direction = null } = {})
     if (recordHistory) pushHistory(entry.id);
     if (direction != null) {
       const newCard = root.querySelector('.card');
-      if (newCard) newCard.classList.add(direction > 0 ? 'enter-from-right' : 'enter-from-left');
+      if (newCard) newCard.classList.add(direction > 0 ? 'enter-from-bottom' : 'enter-from-top');
     }
   };
   if (prev) {
     prev.classList.add('leaving');
-    if (direction != null) prev.classList.add(direction > 0 ? 'leave-left' : 'leave-right');
+    if (direction != null) prev.classList.add(direction > 0 ? 'leave-up' : 'leave-down');
     setTimeout(doMount, direction != null ? 180 : 130);
   } else {
     doMount();
@@ -196,11 +196,11 @@ export function setupCardInteractions(root) {
     const dt = Date.now() - touchStartT;
     touchStartX = touchStartY = null;
 
-    // Swipe
-    if (dt < 600 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    // Swipe vertical (estilo TikTok): up = siguiente, down = anterior
+    if (dt < 600 && Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx) * 1.5) {
       suppressNextClick = true;
       setTimeout(() => suppressNextClick = false, 350);
-      if (dx < 0) navHistory(1); else navHistory(-1);
+      if (dy < 0) navHistory(1); else navHistory(-1);
       return;
     }
 

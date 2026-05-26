@@ -50,7 +50,7 @@ async function boot() {
 
 // One-time onboarding hint
 function maybeShowSwipeHint() {
-  const seen = storage.get('hint_seen', false);
+  const seen = storage.get('hint_seen_v2', false);
   if (seen) return;
   const cur = currentRoute();
   if (cur.name !== '' && cur.name !== 'card') return;
@@ -62,7 +62,7 @@ function maybeShowSwipeHint() {
     const dismiss = () => {
       el.classList.remove('show');
       setTimeout(() => { el.hidden = true; }, 300);
-      storage.set('hint_seen', true);
+      storage.set('hint_seen_v2', true);
       document.removeEventListener('touchstart', dismiss);
       document.removeEventListener('mousedown', dismiss);
       document.removeEventListener('keydown', dismiss);
@@ -210,8 +210,8 @@ function bindGlobalListeners() {
     if (['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
     const cur = currentRoute();
     if (cur.name !== '' && cur.name !== 'card') return;
-    if (e.key === 'ArrowRight') { e.preventDefault(); navHistory(1); }
-    else if (e.key === 'ArrowLeft') { e.preventDefault(); navHistory(-1); }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); navHistory(1); }
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); navHistory(-1); }
     else if (e.code === 'Space') { e.preventDefault(); nextRandom(); }
   });
 
