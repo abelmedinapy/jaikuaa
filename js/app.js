@@ -242,9 +242,7 @@ function bindServiceWorker() {
       }
       const reg = await navigator.serviceWorker.register('sw.js');
       setInterval(() => reg.update().catch(() => {}), 5 * 60 * 1000);
-      document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) reg.update().catch(() => {});
-      });
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
     } catch (err) { console.warn('SW register failed', err); }
   });
 
